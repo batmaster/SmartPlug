@@ -25,7 +25,6 @@ public class SwitchActivity extends Activity {
 	private TextView textViewStatus;
 	private ImageView[] imageViewSwitch;
 	private ImageView[] imageViewBulb;
-	private boolean[] sw;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class SwitchActivity extends Activity {
 		
 		imageViewSwitch = new ImageView[4];
 		imageViewBulb = new ImageView[4];
-		sw = new boolean[4];
 		
 		textViewStatus = (TextView) findViewById(R.id.textViewStatus);
 		
@@ -168,49 +166,61 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.length() == 4) {
-				if (result.charAt(0) == '0') {
-					sw[0] = false;
+			if (result.length() == 8) {
+				if (result.charAt(4) == '0') {
 					imageViewSwitch[0].setImageResource(R.drawable.switch_off);
-					imageViewBulb[0].setImageResource(R.drawable.switch_off);
 				}
 				else {
-					sw[0] = true;
 					imageViewSwitch[0].setImageResource(R.drawable.switch_on);
-					imageViewBulb[0].setImageResource(R.drawable.switch_on);
+				}
+
+				if (result.charAt(5) == '0') {
+					imageViewSwitch[1].setImageResource(R.drawable.switch_off);
+				}
+				else {
+					imageViewSwitch[1].setImageResource(R.drawable.switch_on);
+				}
+				
+				if (result.charAt(6) == '0') {
+					imageViewSwitch[2].setImageResource(R.drawable.switch_off);
+				}
+				else {
+					imageViewSwitch[2].setImageResource(R.drawable.switch_on);
+				}
+				
+				if (result.charAt(7) == '0') {
+					imageViewSwitch[3].setImageResource(R.drawable.switch_off);
+				}
+				else {
+					imageViewSwitch[3].setImageResource(R.drawable.switch_on);
+				}
+				
+				if (result.charAt(0) == '0') {
+					imageViewBulb[0].setImageResource(R.drawable.bulb_off);
+				}
+				else {
+					imageViewBulb[0].setImageResource(R.drawable.bulb_on);
 				}
 
 				if (result.charAt(1) == '0') {
-					sw[1] = false;
-					imageViewSwitch[1].setImageResource(R.drawable.switch_off);
-					imageViewBulb[1].setImageResource(R.drawable.switch_off);
+					imageViewBulb[1].setImageResource(R.drawable.bulb_off);
 				}
 				else {
-					sw[1] = true;
-					imageViewSwitch[1].setImageResource(R.drawable.switch_on);
-					imageViewBulb[1].setImageResource(R.drawable.switch_on);
+					imageViewBulb[1].setImageResource(R.drawable.bulb_on);
 				}
 				
 				if (result.charAt(2) == '0') {
-					sw[2] = false;
-					imageViewSwitch[2].setImageResource(R.drawable.switch_off);
-					imageViewBulb[2].setImageResource(R.drawable.switch_off);
+					imageViewBulb[2].setImageResource(R.drawable.bulb_off);
 				}
 				else {
-					sw[2] = true;
-					imageViewSwitch[2].setImageResource(R.drawable.switch_on);
-					imageViewBulb[2].setImageResource(R.drawable.switch_on);
+					imageViewBulb[2].setImageResource(R.drawable.bulb_on);
 				}
 				
 				if (result.charAt(3) == '0') {
-					sw[3] = false;
-					imageViewSwitch[3].setImageResource(R.drawable.switch_off);
-					imageViewBulb[3].setImageResource(R.drawable.switch_off);
+					imageViewBulb[3].setImageResource(R.drawable.bulb_off);
 				}
 				else {
-					sw[3] = true;
-					imageViewSwitch[3].setImageResource(R.drawable.switch_on);
-					imageViewBulb[3].setImageResource(R.drawable.switch_on);
+					imageViewBulb[3].setImageResource(R.drawable.bulb_on);
 				}
 				
 				textViewStatus.setText("Ready: " + result);
@@ -269,35 +279,25 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.length() == 4) {				
-				boolean state = result.charAt(switchIndex) == 0 ? false : true;
-				if (sw[switchIndex] == state) {
-					Service.sendHttpRequest(getApplicationContext(), "10");
-					sw[switchIndex] = !state;
-					
-					imageViewSwitch[switchIndex].setImageResource(sw[switchIndex]== false ? R.drawable.switch_off : R.drawable.switch_on);
-					imageViewBulb[switchIndex].setImageResource(sw[switchIndex]== false ? R.drawable.switch_off : R.drawable.switch_on);
-				}
-				else {
-					Toast.makeText(getApplicationContext(), "Switch is already changed state.", Toast.LENGTH_SHORT).show();
-					sw[switchIndex] = state;
-				}
+//			if (result.length() == 4) {				
+				CheckStateTask task = new CheckStateTask(getApplicationContext(), firstChecking);
+            	task.execute();
 				
 				textViewStatus.setText("Ready");
-			}
-			else {
-				AlertDialog d;
-				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
-				alert.setMessage("Error: " + result);
-				alert.setCancelable(true);
-				d = alert.create();
-				d.setCanceledOnTouchOutside(true);
-				d.show();
-				
-				textViewStatus.setText("Ready");
-			}
+//			}
+//			else {
+//				AlertDialog d;
+//				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
+//				alert.setMessage("Error: " + result);
+//				alert.setCancelable(true);
+//				d = alert.create();
+//				d.setCanceledOnTouchOutside(true);
+//				d.show();
+//				
+//				textViewStatus.setText("Ready");
+//			}
 			
-			ready = true;
+//			ready = true;
 		}
 	}
 }

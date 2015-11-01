@@ -22,9 +22,11 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_luncher=0x7f020000;
-        public static final int switch_off=0x7f020001;
-        public static final int switch_on=0x7f020002;
+        public static final int bulb_off=0x7f020000;
+        public static final int bulb_on=0x7f020001;
+        public static final int ic_luncher=0x7f020002;
+        public static final int switch_off=0x7f020003;
+        public static final int switch_on=0x7f020004;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f070005;

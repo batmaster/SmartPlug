@@ -42,16 +42,16 @@
                 <ImageView
                     android:id="@+id/imageViewSwitch1"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
                     android:src="@drawable/switch_off" />
 
                 <ImageView
                     android:id="@+id/imageViewBulb1"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
+                    android:src="@drawable/bulb_off" />
 
             </LinearLayout>
 
@@ -77,16 +77,16 @@
                 <ImageView
                     android:id="@+id/imageViewSwitch2"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
                     android:src="@drawable/switch_off" />
 
                 <ImageView
                     android:id="@+id/imageViewBulb2"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
+                    android:src="@drawable/bulb_off" />
 
             </LinearLayout>
 
@@ -120,16 +120,16 @@
                 <ImageView
                     android:id="@+id/imageViewSwitch3"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
                     android:src="@drawable/switch_off" />
 
                 <ImageView
                     android:id="@+id/imageViewBulb3"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
+                    android:src="@drawable/bulb_off" />
 
             </LinearLayout>
 
@@ -155,16 +155,16 @@
                 <ImageView
                     android:id="@+id/imageViewSwitch4"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
                     android:src="@drawable/switch_off" />
 
                 <ImageView
                     android:id="@+id/imageViewBulb4"
                     android:layout_width="0px"
-                    android:layout_height="wrap_content"
+                    android:layout_height="450px"
                     android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
+                    android:src="@drawable/bulb_off" />
 
             </LinearLayout>
 

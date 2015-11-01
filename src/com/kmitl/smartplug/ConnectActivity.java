@@ -90,7 +90,7 @@ public class ConnectActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.length() == 4) {
+			if (result.length() == 8) {
 				Intent intent = new Intent(context, SwitchActivity.class);
 				startActivity(intent);
 				finish();
