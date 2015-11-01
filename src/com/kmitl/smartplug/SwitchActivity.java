@@ -280,7 +280,7 @@ public class SwitchActivity extends Activity {
             }
 			
 //			if (result.length() == 4) {				
-				CheckStateTask task = new CheckStateTask(getApplicationContext(), firstChecking);
+				CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
             	task.execute();
 				
 				textViewStatus.setText("Ready");
@@ -297,7 +297,7 @@ public class SwitchActivity extends Activity {
 //				textViewStatus.setText("Ready");
 //			}
 			
-//			ready = true;
+			ready = true;
 		}
 	}
 }
