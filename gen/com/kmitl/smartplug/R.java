@@ -33,16 +33,17 @@ public final class R {
         public static final int LinearLayout2=0x7f070000;
         public static final int buttonClear=0x7f070003;
         public static final int buttonConnect=0x7f070004;
+        public static final int buttonRefresh=0x7f070007;
         public static final int editTextIp=0x7f070001;
         public static final int editTextPort=0x7f070002;
-        public static final int imageViewBulb1=0x7f070008;
-        public static final int imageViewBulb2=0x7f07000a;
-        public static final int imageViewBulb3=0x7f07000c;
-        public static final int imageViewBulb4=0x7f07000e;
-        public static final int imageViewSwitch1=0x7f070007;
-        public static final int imageViewSwitch2=0x7f070009;
-        public static final int imageViewSwitch3=0x7f07000b;
-        public static final int imageViewSwitch4=0x7f07000d;
+        public static final int imageViewBulb1=0x7f070009;
+        public static final int imageViewBulb2=0x7f07000b;
+        public static final int imageViewBulb3=0x7f07000d;
+        public static final int imageViewBulb4=0x7f07000f;
+        public static final int imageViewSwitch1=0x7f070008;
+        public static final int imageViewSwitch2=0x7f07000a;
+        public static final int imageViewSwitch3=0x7f07000c;
+        public static final int imageViewSwitch4=0x7f07000e;
         public static final int textViewStatus=0x7f070006;
     }
     public static final class layout {

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 public class SwitchActivity extends Activity {
 	
 	private TextView textViewStatus;
+	private Button buttonRefresh;
 	private ImageView[] imageViewSwitch;
 	private ImageView[] imageViewBulb;
 
@@ -35,6 +37,15 @@ public class SwitchActivity extends Activity {
 		imageViewBulb = new ImageView[4];
 		
 		textViewStatus = (TextView) findViewById(R.id.textViewStatus);
+		
+		buttonRefresh.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
+            	task.execute();
+			}
+		});
 		
 		imageViewSwitch[0] = (ImageView) findViewById(R.id.imageViewSwitch1);
 		imageViewSwitch[0].setOnClickListener(new OnClickListener() {
@@ -125,7 +136,7 @@ public class SwitchActivity extends Activity {
 	        }
 	    };
 
-	    timer.schedule(task, 1 * 1000, 5 * 1000);
+	    timer.schedule(task, 1 * 1000, 15 * 1000);
 	}
 	
 	private boolean ready = true;
@@ -279,11 +290,17 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-//			if (result.length() == 4) {				
-				CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
-            	task.execute();
-				
-				textViewStatus.setText("Ready");
+//			if (result.length() == 4) {
+//				try {
+//					Thread.sleep(1000);
+					CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
+	            	task.execute();
+//				} catch(InterruptedException e){
+//					ready = true;
+//				}
+//				
+//				
+//				textViewStatus.setText("Ready");
 //			}
 //			else {
 //				AlertDialog d;
@@ -296,8 +313,8 @@ public class SwitchActivity extends Activity {
 //				
 //				textViewStatus.setText("Ready");
 //			}
-			
-			ready = true;
+//			
+//			ready = true;
 		}
 	}
 }
