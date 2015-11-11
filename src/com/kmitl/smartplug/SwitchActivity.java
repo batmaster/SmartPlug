@@ -38,6 +38,7 @@ public class SwitchActivity extends Activity {
 		
 		textViewStatus = (TextView) findViewById(R.id.textViewStatus);
 		
+		buttonRefresh = (Button) findViewById(R.id.buttonRefresh);
 		buttonRefresh.setOnClickListener(new OnClickListener() {
 			
 			@Override
