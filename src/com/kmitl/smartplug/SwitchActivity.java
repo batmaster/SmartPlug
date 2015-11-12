@@ -24,7 +24,7 @@ import android.widget.Toast;
 public class SwitchActivity extends Activity {
 	
 	private TextView textViewStatus;
-	private Button buttonRefresh;
+	private ImageView imageViewRefresh;
 	private ImageView[] imageViewSwitch;
 	private ImageView[] imageViewBulb;
 
@@ -38,8 +38,8 @@ public class SwitchActivity extends Activity {
 		
 		textViewStatus = (TextView) findViewById(R.id.textViewStatus);
 		
-		buttonRefresh = (Button) findViewById(R.id.buttonRefresh);
-		buttonRefresh.setOnClickListener(new OnClickListener() {
+		imageViewRefresh = (ImageView) findViewById(R.id.imageViewRefresh);
+		imageViewRefresh.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -113,7 +113,10 @@ public class SwitchActivity extends Activity {
 		imageViewBulb[2] = (ImageView) findViewById(R.id.imageViewBulb3);
 		imageViewBulb[3] = (ImageView) findViewById(R.id.imageViewBulb4);
 		
-		setRepeatingAsyncTask();
+//		setRepeatingAsyncTask();
+		CheckStateTask task = new CheckStateTask(getApplicationContext(), firstChecking);
+    	task.execute();
+    	firstChecking = false;
 	}
 	
 	private boolean firstChecking = true;
@@ -157,6 +160,7 @@ public class SwitchActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
+			Log.d("p", "CheckStateTask: Pre");
 			ready = false;
 			
 			textViewStatus.setText("Checking...");
@@ -169,11 +173,13 @@ public class SwitchActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Void... params) {
+			Log.d("p", "CheckStateTask: In");
 			return Service.sendHttpRequest(context, "Z4");
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
+			Log.d("p", "CheckStateTask: Post");
 			if (dialog.isShowing()) {
 				dialog.dismiss();
             }
@@ -271,6 +277,7 @@ public class SwitchActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
+			Log.d("p", "SwitchTask: Pre");
 			ready = false;
 			textViewStatus.setText("Sending command...");
 			
@@ -282,23 +289,25 @@ public class SwitchActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Void... params) {
+			Log.d("p", "SwitchTask: In");
 			return Service.sendHttpRequest(context, switchPin);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
+			Log.d("p", "SwitchTask: Post");
 			if (dialog.isShowing()) {
 				dialog.dismiss();
             }
 			
 //			if (result.length() == 4) {
-//				try {
-//					Thread.sleep(1000);
+				try {
+					Thread.sleep(1000);
 					CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
 	            	task.execute();
-//				} catch(InterruptedException e){
-//					ready = true;
-//				}
+				} catch(InterruptedException e){
+					ready = true;
+				}
 //				
 //				
 //				textViewStatus.setText("Ready");

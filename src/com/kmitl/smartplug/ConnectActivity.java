@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -72,6 +73,7 @@ public class ConnectActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
+			Log.d("p", "TryToConnectTask: Pre");
 			dialog.setMessage("Trying to connect...");
 			
 			if (!dialog.isShowing()) {
@@ -81,11 +83,13 @@ public class ConnectActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Void... params) {
+			Log.d("p", "TryToConnectTask: In");
 			return Service.sendHttpRequest(context, "Z4");
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
+			Log.d("p", "TryToConnectTask: Post");
 			if (dialog.isShowing()) {
 				dialog.dismiss();
             }
