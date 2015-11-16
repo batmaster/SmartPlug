@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.SocketException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -11,7 +12,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,6 +41,10 @@ public class Service {
 		
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
+			HttpParams params = httpclient.getParams();
+			HttpConnectionParams.setConnectionTimeout(params, 100);
+			HttpConnectionParams.setSoTimeout(params, 100);
+			
 			URI website = new URI("http://" + getPreference(context, "ip") + ":"+ getPreference(context, "port") + "/?pin=" + parameter);
 			Log.d("http", website.toString());
 			HttpGet getRequest = new HttpGet();
@@ -59,7 +67,6 @@ public class Service {
 			serverResponse = e.getMessage();
 		} catch (Exception e) {
 			e.printStackTrace();
-			serverResponse = e.getMessage();
 		}
 		
 		Log.d("http", "Response: " + serverResponse);

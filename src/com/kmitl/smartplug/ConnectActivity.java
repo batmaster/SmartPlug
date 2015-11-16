@@ -84,7 +84,7 @@ public class ConnectActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "TryToConnectTask: In");
-			return Service.sendHttpRequest(context, "Z4");
+			return Service.sendHttpRequest(context, "4");
 		}
 
 		@Override
@@ -96,13 +96,14 @@ public class ConnectActivity extends Activity {
 			
 			if (result.length() == 8) {
 				Intent intent = new Intent(context, SwitchActivity.class);
+				intent.putExtra("the8Digits", result);
 				startActivity(intent);
 				finish();
 			}
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(ConnectActivity.this);
-				alert.setMessage("Connection error: " + result);
+				alert.setMessage("Connection error (not 8 digits): " + result);
 				alert.setCancelable(true);
 				d = alert.create();
 				d.setCanceledOnTouchOutside(true);

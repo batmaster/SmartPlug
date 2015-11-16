@@ -114,12 +114,9 @@ public class SwitchActivity extends Activity {
 		imageViewBulb[3] = (ImageView) findViewById(R.id.imageViewBulb4);
 		
 //		setRepeatingAsyncTask();
-		CheckStateTask task = new CheckStateTask(getApplicationContext(), firstChecking);
-    	task.execute();
-    	firstChecking = false;
+		refreshStatus(getIntent().getStringExtra("the8Digits"));
 	}
 	
-	private boolean firstChecking = true;
 	private void setRepeatingAsyncTask() {
 
 	    final Handler handler = new Handler();
@@ -131,9 +128,8 @@ public class SwitchActivity extends Activity {
 	            handler.post(new Runnable() {
 	            	public void run() {
 	            		if (ready) {
-		                	CheckStateTask task = new CheckStateTask(getApplicationContext(), firstChecking);
+		                	CheckStateTask task = new CheckStateTask(getApplicationContext(), false);
 		                	task.execute();
-		                	firstChecking = false;
 	            		}
 	                }
 	            });
@@ -141,6 +137,18 @@ public class SwitchActivity extends Activity {
 	    };
 
 	    timer.schedule(task, 1 * 1000, 15 * 1000);
+	}
+	
+	private void refreshStatus(String the8Digits) {
+		imageViewSwitch[0].setImageResource(the8Digits.charAt(4) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+		imageViewSwitch[1].setImageResource(the8Digits.charAt(5) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+		imageViewSwitch[2].setImageResource(the8Digits.charAt(6) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+		imageViewSwitch[3].setImageResource(the8Digits.charAt(7) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+	
+		imageViewBulb[0].setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+		imageViewBulb[1].setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+		imageViewBulb[2].setImageResource(the8Digits.charAt(2) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+		imageViewBulb[3].setImageResource(the8Digits.charAt(3) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 	}
 	
 	private boolean ready = true;
@@ -174,7 +182,7 @@ public class SwitchActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "CheckStateTask: In");
-			return Service.sendHttpRequest(context, "Z4");
+			return Service.sendHttpRequest(context, "4");
 		}
 
 		@Override
@@ -185,61 +193,7 @@ public class SwitchActivity extends Activity {
             }
 			
 			if (result.length() == 8) {
-				if (result.charAt(4) == '0') {
-					imageViewSwitch[0].setImageResource(R.drawable.switch_off);
-				}
-				else {
-					imageViewSwitch[0].setImageResource(R.drawable.switch_on);
-				}
-
-				if (result.charAt(5) == '0') {
-					imageViewSwitch[1].setImageResource(R.drawable.switch_off);
-				}
-				else {
-					imageViewSwitch[1].setImageResource(R.drawable.switch_on);
-				}
-				
-				if (result.charAt(6) == '0') {
-					imageViewSwitch[2].setImageResource(R.drawable.switch_off);
-				}
-				else {
-					imageViewSwitch[2].setImageResource(R.drawable.switch_on);
-				}
-				
-				if (result.charAt(7) == '0') {
-					imageViewSwitch[3].setImageResource(R.drawable.switch_off);
-				}
-				else {
-					imageViewSwitch[3].setImageResource(R.drawable.switch_on);
-				}
-				
-				if (result.charAt(0) == '0') {
-					imageViewBulb[0].setImageResource(R.drawable.bulb_off);
-				}
-				else {
-					imageViewBulb[0].setImageResource(R.drawable.bulb_on);
-				}
-
-				if (result.charAt(1) == '0') {
-					imageViewBulb[1].setImageResource(R.drawable.bulb_off);
-				}
-				else {
-					imageViewBulb[1].setImageResource(R.drawable.bulb_on);
-				}
-				
-				if (result.charAt(2) == '0') {
-					imageViewBulb[2].setImageResource(R.drawable.bulb_off);
-				}
-				else {
-					imageViewBulb[2].setImageResource(R.drawable.bulb_on);
-				}
-				
-				if (result.charAt(3) == '0') {
-					imageViewBulb[3].setImageResource(R.drawable.bulb_off);
-				}
-				else {
-					imageViewBulb[3].setImageResource(R.drawable.bulb_on);
-				}
+				refreshStatus(result);
 				
 				textViewStatus.setText("Ready: " + result);
 			}
@@ -300,31 +254,11 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-//			if (result.length() == 4) {
-				try {
-					Thread.sleep(1000);
-					CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
-	            	task.execute();
-				} catch(InterruptedException e){
-					ready = true;
-				}
-//				
-//				
-//				textViewStatus.setText("Ready");
-//			}
-//			else {
-//				AlertDialog d;
-//				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
-//				alert.setMessage("Error: " + result);
-//				alert.setCancelable(true);
-//				d = alert.create();
-//				d.setCanceledOnTouchOutside(true);
-//				d.show();
-//				
-//				textViewStatus.setText("Ready");
-//			}
-//			
-//			ready = true;
+			imageViewSwitch[switchIndex].setImageResource(result.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewBulb[switchIndex].setImageResource(result.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			
+			textViewStatus.setText("Ready");
+			ready = true;
 		}
 	}
 }
