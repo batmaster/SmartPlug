@@ -1,5 +1,9 @@
 package com.kmitl.smartplug;
 
+import java.net.SocketException;
+
+import org.apache.http.conn.ConnectTimeoutException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -84,7 +88,8 @@ public class ConnectActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "TryToConnectTask: In");
-			return Service.sendHttpRequest(context, "4");
+			
+			return Service.sendHttpRequest(context, "4", 5);
 		}
 
 		@Override
@@ -103,7 +108,12 @@ public class ConnectActivity extends Activity {
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(ConnectActivity.this);
-				alert.setMessage("Connection error (not 8 digits): " + result);
+				if (result.equals("ConnectTimeoutException"))
+					alert.setMessage("เชื่อมต่อไม่ได้");
+				else if (result.equals("SocketTimeoutException"))
+					alert.setMessage("ลองหลายรอบแล้ว");
+				else
+					alert.setMessage("Connection error (not 8 digits): " + result);
 				alert.setCancelable(true);
 				d = alert.create();
 				d.setCanceledOnTouchOutside(true);

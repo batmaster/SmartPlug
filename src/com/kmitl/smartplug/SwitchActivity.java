@@ -182,7 +182,7 @@ public class SwitchActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "CheckStateTask: In");
-			return Service.sendHttpRequest(context, "4");
+			return Service.sendHttpRequest(context, "4", 5);
 		}
 
 		@Override
@@ -200,7 +200,12 @@ public class SwitchActivity extends Activity {
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
-				alert.setMessage("Error: " + result);
+				if (result.equals("ConnectTimeoutException"))
+					alert.setMessage("เชื่อมต่อไม่ได้");
+				else if (result.equals("SocketTimeoutException"))
+					alert.setMessage("ลองหลายรอบแล้ว");
+				else
+					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
 				d = alert.create();
 				d.setCanceledOnTouchOutside(true);
@@ -244,7 +249,7 @@ public class SwitchActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "SwitchTask: In");
-			return Service.sendHttpRequest(context, switchPin);
+			return Service.sendHttpRequest(context, switchPin, 5);
 		}
 
 		@Override
@@ -254,8 +259,25 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			imageViewSwitch[switchIndex].setImageResource(result.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-			imageViewBulb[switchIndex].setImageResource(result.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			if (result.length() == 2) {
+				imageViewSwitch[switchIndex].setImageResource(result.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+				imageViewBulb[switchIndex].setImageResource(result.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+				
+			}
+			else {
+				AlertDialog d;
+				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
+				if (result.equals("ConnectTimeoutException"))
+					alert.setMessage("เชื่อมต่อไม่ได้");
+				else if (result.equals("SocketTimeoutException"))
+					alert.setMessage("ลองหลายรอบแล้ว");
+				else
+					alert.setMessage("Error: " + result);
+				alert.setCancelable(true);
+				d = alert.create();
+				d.setCanceledOnTouchOutside(true);
+				d.show();
+			}			
 			
 			textViewStatus.setText("Ready");
 			ready = true;
