@@ -26,6 +26,9 @@ import android.util.Log;
 
 public class Service {
 	
+	public static final int SOCKET_TIMEOUT_TRYING = 10;
+	public static final int TIMEOUT = 5000;
+	
 	public static void setPerference(Context context, String key, String value) {
 		SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
@@ -45,8 +48,8 @@ public class Service {
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpParams params = httpclient.getParams();
-			HttpConnectionParams.setConnectionTimeout(params, 3000);
-			HttpConnectionParams.setSoTimeout(params, 3000);
+			HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
+			HttpConnectionParams.setSoTimeout(params, TIMEOUT);
 			
 			URI website = new URI("http://" + getPreference(context, "ip") + ":"+ getPreference(context, "port") + "/?pin=" + parameter);
 			Log.d("http", website.toString());

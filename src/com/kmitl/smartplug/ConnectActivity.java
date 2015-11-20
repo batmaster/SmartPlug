@@ -89,7 +89,7 @@ public class ConnectActivity extends Activity {
 		protected String doInBackground(Void... params) {
 			Log.d("p", "TryToConnectTask: In");
 			
-			return Service.sendHttpRequest(context, "4", 5);
+			return Service.sendHttpRequest(context, "4", Service.SOCKET_TIMEOUT_TRYING);
 		}
 
 		@Override

@@ -182,7 +182,7 @@ public class SwitchActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "CheckStateTask: In");
-			return Service.sendHttpRequest(context, "4", 5);
+			return Service.sendHttpRequest(context, "4", Service.SOCKET_TIMEOUT_TRYING);
 		}
 
 		@Override
@@ -249,7 +249,7 @@ public class SwitchActivity extends Activity {
 		@Override
 		protected String doInBackground(Void... params) {
 			Log.d("p", "SwitchTask: In");
-			return Service.sendHttpRequest(context, switchPin, 5);
+			return Service.sendHttpRequest(context, switchPin, Service.SOCKET_TIMEOUT_TRYING);
 		}
 
 		@Override
