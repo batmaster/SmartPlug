@@ -59,6 +59,9 @@ public class ConnectActivity extends Activity {
 				
 				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
 				task.execute();
+				
+//				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
+//				startActivity(intent);
 			}
 		});
 	}
@@ -99,7 +102,7 @@ public class ConnectActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.length() == 8) {
+			if (result.length() == 2 || result.length() == 8) {
 				Intent intent = new Intent(context, SwitchActivity.class);
 				intent.putExtra("the8Digits", result);
 				startActivity(intent);
@@ -113,7 +116,7 @@ public class ConnectActivity extends Activity {
 				else if (result.equals("SocketTimeoutException"))
 					alert.setMessage("ลองหลายรอบแล้ว");
 				else
-					alert.setMessage("Connection error (not 8 digits): " + result);
+					alert.setMessage("Connection error : " + result);
 				alert.setCancelable(true);
 				d = alert.create();
 				d.setCanceledOnTouchOutside(true);

@@ -26,7 +26,7 @@ import android.util.Log;
 
 public class Service {
 	
-	public static final int SOCKET_TIMEOUT_TRYING = 10;
+	public static final int SOCKET_TIMEOUT_TRYING = 5000;
 	public static final int TIMEOUT = 5000;
 	
 	public static void setPerference(Context context, String key, String value) {

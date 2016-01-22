@@ -25,6 +25,7 @@ public class SwitchActivity extends Activity {
 	
 	private TextView textViewStatus;
 	private ImageView imageViewRefresh;
+	private ImageView imageViewAlarm;
 	private ImageView[] imageViewSwitch;
 	private ImageView[] imageViewBulb;
 
@@ -45,6 +46,16 @@ public class SwitchActivity extends Activity {
 			public void onClick(View v) {
 				CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
             	task.execute();
+			}
+		});
+		
+		imageViewAlarm = (ImageView) findViewById(R.id.imageViewAlarm);
+		imageViewAlarm.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -140,15 +151,25 @@ public class SwitchActivity extends Activity {
 	}
 	
 	private void refreshStatus(String the8Digits) {
-		imageViewSwitch[0].setImageResource(the8Digits.charAt(4) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-		imageViewSwitch[1].setImageResource(the8Digits.charAt(5) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-		imageViewSwitch[2].setImageResource(the8Digits.charAt(6) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-		imageViewSwitch[3].setImageResource(the8Digits.charAt(7) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-	
-		imageViewBulb[0].setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-		imageViewBulb[1].setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-		imageViewBulb[2].setImageResource(the8Digits.charAt(2) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-		imageViewBulb[3].setImageResource(the8Digits.charAt(3) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+		if (the8Digits.length() == 2) {
+			imageViewSwitch[0].setImageResource(the8Digits.charAt(1) == '1' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewBulb[0].setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			
+			findViewById(R.id.linearLayoutOutlet2).setVisibility(View.GONE);
+			findViewById(R.id.linearLayoutOutlet3).setVisibility(View.GONE);
+			findViewById(R.id.linearLayoutOutlet4).setVisibility(View.GONE);
+		}
+		else {
+			imageViewSwitch[0].setImageResource(the8Digits.charAt(4) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewSwitch[1].setImageResource(the8Digits.charAt(5) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewSwitch[2].setImageResource(the8Digits.charAt(6) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewSwitch[3].setImageResource(the8Digits.charAt(7) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+		
+			imageViewBulb[0].setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			imageViewBulb[1].setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			imageViewBulb[2].setImageResource(the8Digits.charAt(2) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			imageViewBulb[3].setImageResource(the8Digits.charAt(3) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);	
+		}
 	}
 	
 	private boolean ready = true;
@@ -192,7 +213,7 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.length() == 8) {
+			if (result.length() == 8 || result.length() == 2) {
 				refreshStatus(result);
 				
 				textViewStatus.setText("Ready: " + result);

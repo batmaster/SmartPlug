@@ -24,6 +24,7 @@
         android:weightSum="2" >
 
         <LinearLayout
+            android:id="@+id/linearLayoutOutlet1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -59,6 +60,7 @@
         </LinearLayout>
         
         <LinearLayout
+            android:id="@+id/linearLayoutOutlet2"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -102,6 +104,7 @@
         android:weightSum="2" >
 
         <LinearLayout
+            android:id="@+id/linearLayoutOutlet3"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -137,6 +140,7 @@
         </LinearLayout>
         
         <LinearLayout
+            android:id="@+id/linearLayoutOutlet4"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -178,5 +182,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/refresh" />
+
+    <ImageView
+        android:id="@+id/imageViewAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/refresh"
+        android:visibility="gone" />
 
 </LinearLayout>
