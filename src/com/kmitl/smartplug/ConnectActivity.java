@@ -62,6 +62,11 @@ public class ConnectActivity extends Activity {
 				
 //				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
 //				startActivity(intent);
+				
+				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
+				intent.putExtra("the8Digits", "00");
+				startActivity(intent);
+				finish();
 			}
 		});
 	}

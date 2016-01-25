@@ -187,7 +187,6 @@
         android:id="@+id/imageViewAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/refresh"
-        android:visibility="gone" />
+        android:src="@drawable/refresh" />
 
 </LinearLayout>
