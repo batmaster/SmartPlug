@@ -26,16 +26,14 @@ public class SwitchActivity extends Activity {
 	private TextView textViewStatus;
 	private ImageView imageViewRefresh;
 	private ImageView imageViewAlarm;
-	private ImageView[] imageViewSwitch;
-	private ImageView[] imageViewBulb;
+	private ImageView imageViewSetting;
+	private ImageView imageViewSwitch;
+	private ImageView imageViewBulb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_switch);
-		
-		imageViewSwitch = new ImageView[4];
-		imageViewBulb = new ImageView[4];
 		
 		textViewStatus = (TextView) findViewById(R.id.textViewStatus);
 		
@@ -59,13 +57,23 @@ public class SwitchActivity extends Activity {
 			}
 		});
 		
-		imageViewSwitch[0] = (ImageView) findViewById(R.id.imageViewSwitch1);
-		imageViewSwitch[0].setOnClickListener(new OnClickListener() {
+		imageViewSetting = (ImageView) findViewById(R.id.imageViewSetting);
+		imageViewSetting.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		imageViewSwitch = (ImageView) findViewById(R.id.imageViewSwitch);
+		imageViewSwitch.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				if (ready) {
-					SwitchTask task = new SwitchTask(getApplicationContext(), 1);
+					SwitchTask task = new SwitchTask(getApplicationContext());
 					task.execute();
 				}
 				else {
@@ -74,55 +82,7 @@ public class SwitchActivity extends Activity {
 			}
 		});
 		
-		imageViewSwitch[1] = (ImageView) findViewById(R.id.imageViewSwitch2);
-		imageViewSwitch[1].setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (ready) {
-					SwitchTask task = new SwitchTask(getApplicationContext(), 2);
-					task.execute();
-				}
-				else {
-					Toast.makeText(getApplicationContext(), "Sending in progress, please wait and try again.", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		
-		imageViewSwitch[2] = (ImageView) findViewById(R.id.imageViewSwitch3);
-		imageViewSwitch[2].setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (ready) {
-					SwitchTask task = new SwitchTask(getApplicationContext(), 3);
-					task.execute();
-				}
-				else {
-					Toast.makeText(getApplicationContext(), "Sending in progress, please wait and try again.", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		
-		imageViewSwitch[3] = (ImageView) findViewById(R.id.imageViewSwitch4);
-		imageViewSwitch[3].setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (ready) {
-					SwitchTask task = new SwitchTask(getApplicationContext(), 4);
-					task.execute();
-				}
-				else {
-					Toast.makeText(getApplicationContext(), "Sending in progress, please wait and try again.", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		
-		imageViewBulb[0] = (ImageView) findViewById(R.id.imageViewBulb1);
-		imageViewBulb[1] = (ImageView) findViewById(R.id.imageViewBulb2);
-		imageViewBulb[2] = (ImageView) findViewById(R.id.imageViewBulb3);
-		imageViewBulb[3] = (ImageView) findViewById(R.id.imageViewBulb4);
+		imageViewBulb = (ImageView) findViewById(R.id.imageViewBulb);
 		
 //		setRepeatingAsyncTask();
 		refreshStatus(getIntent().getStringExtra("the8Digits"));
@@ -151,25 +111,8 @@ public class SwitchActivity extends Activity {
 	}
 	
 	private void refreshStatus(String the8Digits) {
-		if (the8Digits.length() == 2) {
-			imageViewSwitch[0].setImageResource(the8Digits.charAt(1) == '1' ? R.drawable.switch_off : R.drawable.switch_on);
-			imageViewBulb[0].setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-			
-			findViewById(R.id.linearLayoutOutlet2).setVisibility(View.GONE);
-			findViewById(R.id.linearLayoutOutlet3).setVisibility(View.GONE);
-			findViewById(R.id.linearLayoutOutlet4).setVisibility(View.GONE);
-		}
-		else {
-			imageViewSwitch[0].setImageResource(the8Digits.charAt(4) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-			imageViewSwitch[1].setImageResource(the8Digits.charAt(5) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-			imageViewSwitch[2].setImageResource(the8Digits.charAt(6) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-			imageViewSwitch[3].setImageResource(the8Digits.charAt(7) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-		
-			imageViewBulb[0].setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-			imageViewBulb[1].setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-			imageViewBulb[2].setImageResource(the8Digits.charAt(2) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-			imageViewBulb[3].setImageResource(the8Digits.charAt(3) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);	
-		}
+			imageViewSwitch.setImageResource(the8Digits.charAt(1) == '1' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 	}
 	
 	private boolean ready = true;
@@ -246,10 +189,10 @@ public class SwitchActivity extends Activity {
 		private int switchIndex;
 		private ProgressDialog dialog;
 		
-		public SwitchTask(Context context, int switchNumber) {
+		public SwitchTask(Context context) {
 			this.context = context;
-			this.switchPin = String.valueOf(switchNumber + 9);
-			this.switchIndex = switchNumber - 1;
+			this.switchPin = String.valueOf(10);
+			this.switchIndex = 1;
 			
 			dialog = new ProgressDialog(SwitchActivity.this);
 			dialog.setCancelable(false);
@@ -281,8 +224,8 @@ public class SwitchActivity extends Activity {
             }
 			
 			if (result.length() == 2) {
-				imageViewSwitch[switchIndex].setImageResource(result.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-				imageViewBulb[switchIndex].setImageResource(result.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+				imageViewSwitch.setImageResource(result.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
+				imageViewBulb.setImageResource(result.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 				
 			}
 			else {

@@ -18,163 +18,37 @@
         android:text="Status" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayoutOutlet1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2" >
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Outlet 1" />
 
         <LinearLayout
-            android:id="@+id/linearLayoutOutlet1"
-            android:layout_width="0px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:weightSum="2" >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Outlet 1" />
+            <ImageView
+                android:id="@+id/imageViewSwitch"
+                android:layout_width="0px"
+                android:layout_height="450px"
+                android:layout_weight="1"
+                android:src="@drawable/switch_off" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2" >
-
-                <ImageView
-                    android:id="@+id/imageViewSwitch1"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
-
-                <ImageView
-                    android:id="@+id/imageViewBulb1"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/bulb_off" />
-
-            </LinearLayout>
-
+            <ImageView
+                android:id="@+id/imageViewBulb"
+                android:layout_width="0px"
+                android:layout_height="450px"
+                android:layout_weight="1"
+                android:src="@drawable/bulb_off" />
         </LinearLayout>
-        
-        <LinearLayout
-            android:id="@+id/linearLayoutOutlet2"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Outlet 2" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2" >
-
-                <ImageView
-                    android:id="@+id/imageViewSwitch2"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
-
-                <ImageView
-                    android:id="@+id/imageViewBulb2"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/bulb_off" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
-        <LinearLayout
-            android:id="@+id/linearLayoutOutlet3"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Outlet 3" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2" >
-
-                <ImageView
-                    android:id="@+id/imageViewSwitch3"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
-
-                <ImageView
-                    android:id="@+id/imageViewBulb3"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/bulb_off" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-        
-        <LinearLayout
-            android:id="@+id/linearLayoutOutlet4"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Outlet 4" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2" >
-
-                <ImageView
-                    android:id="@+id/imageViewSwitch4"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/switch_off" />
-
-                <ImageView
-                    android:id="@+id/imageViewBulb4"
-                    android:layout_width="0px"
-                    android:layout_height="450px"
-                    android:layout_weight="1"
-                    android:src="@drawable/bulb_off" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
     </LinearLayout>
     
     <ImageView
@@ -185,6 +59,12 @@
 
     <ImageView
         android:id="@+id/imageViewAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/refresh" />
+    
+    <ImageView
+        android:id="@+id/imageViewSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/refresh" />

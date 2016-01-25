@@ -5,10 +5,18 @@
     android:orientation="horizontal"
     android:weightSum="12" >
 
+    <ImageView
+        android:id="@+id/imageViewSwitch"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_margin="10px"
+        android:layout_weight="1"
+        android:src="@drawable/switch_off" />
+
     <LinearLayout
         android:layout_width="0px"
         android:layout_height="wrap_content"
-        android:layout_weight="8"
+        android:layout_weight="9"
         android:orientation="vertical" >
 
         <TextView
@@ -24,13 +32,6 @@
             android:text="TextView" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonEdit"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Edit" />
 
     <Button
         android:id="@+id/buttonDelete"

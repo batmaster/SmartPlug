@@ -5,19 +5,25 @@ import java.net.SocketException;
 import org.apache.http.conn.ConnectTimeoutException;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ConnectActivity extends Activity {
 	
@@ -57,8 +63,8 @@ public class ConnectActivity extends Activity {
 				Service.setPerference(getApplicationContext(), "ip", editTextIp.getText().toString());
 				Service.setPerference(getApplicationContext(), "port", editTextPort.getText().toString());
 				
-				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
-				task.execute();
+//				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
+//				task.execute();
 				
 //				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
 //				startActivity(intent);
@@ -69,6 +75,26 @@ public class ConnectActivity extends Activity {
 				finish();
 			}
 		});
+		
+		boolean start = isServiceRunning(SwitchReceiver.class);
+		if (!start) {
+			Toast.makeText(getApplicationContext(), "start from main", Toast.LENGTH_SHORT).show();
+			
+			Intent alarmIntent = new Intent(getApplicationContext(), SwitchReceiver.class);
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 19096, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);
+		}
+	}
+	
+	private boolean isServiceRunning(Class<?> serviceClass) {
+	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceClass.getName().equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	private class TryToConnectTask extends AsyncTask<Void, Void, String> {

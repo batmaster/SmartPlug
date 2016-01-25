@@ -2,6 +2,7 @@ package com.kmitl.smartplug;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
@@ -11,12 +12,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -34,13 +39,13 @@ public class AlarmActivity extends FragmentActivity {
 
 	private Switch switchEveryday;
 	private EditText editTextDateTime;
+	private Button buttonClear;
 
 	private Button buttonSend;
 	private ListView listViewDateTime;
 	private ListView listViewTime;
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-	private SimpleDateFormat sdf_everyday = new SimpleDateFormat("HH:mm:ss");
+	
 
 	private Date date;
 	private SlideDateTimeListener listener = new SlideDateTimeListener() {
@@ -48,12 +53,12 @@ public class AlarmActivity extends FragmentActivity {
 		@Override
 		public void onDateTimeSet(Date date) {
 			AlarmActivity.this.date = date;
-			editTextDateTime.setText(switchEveryday.isChecked() ? sdf_everyday.format(date) : sdf.format(date));
+			editTextDateTime.setText(switchEveryday.isChecked() ? SharedValues.sdf_everyday.format(date) : SharedValues.sdf.format(date));
 		}
 	};
 
-	private ImageView[] imageViewSwitch;
-	private boolean[] switches;
+	private ImageView imageViewSwitch;
+	private boolean switches;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,8 @@ public class AlarmActivity extends FragmentActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (date != null)
-					editTextDateTime.setText(isChecked ? sdf_everyday.format(date) : sdf.format(date));
+					editTextDateTime.setText(isChecked ? SharedValues.sdf_everyday.format(date) : SharedValues.sdf.format(date));
+				
 			}
 		});
 
@@ -79,47 +85,25 @@ public class AlarmActivity extends FragmentActivity {
 						.setInitialDate(new Date()).build().show();
 			}
 		});
-
-		imageViewSwitch = new ImageView[4];
-		switches = new boolean[4];
-
-		imageViewSwitch[0] = (ImageView) findViewById(R.id.imageViewSwitch1);
-		imageViewSwitch[0].setOnClickListener(new OnClickListener() {
-
+		editTextDateTime.setInputType(InputType.TYPE_NULL);
+		
+		buttonClear = (Button) findViewById(R.id.buttonClear);
+		buttonClear.setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
-				switches[0] = !switches[0];
-				imageViewSwitch[0].setImageResource(switches[0] ? R.drawable.switch_on : R.drawable.switch_off);
+				editTextDateTime.setText("");
 			}
 		});
+		
 
-		imageViewSwitch[1] = (ImageView) findViewById(R.id.imageViewSwitch2);
-		imageViewSwitch[1].setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				switches[1] = !switches[1];
-				imageViewSwitch[1].setImageResource(switches[1] ? R.drawable.switch_on : R.drawable.switch_off);
-			}
-		});
-
-		imageViewSwitch[2] = (ImageView) findViewById(R.id.imageViewSwitch3);
-		imageViewSwitch[2].setOnClickListener(new OnClickListener() {
+		imageViewSwitch = (ImageView) findViewById(R.id.imageViewSwitch);
+		imageViewSwitch.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				switches[2] = !switches[2];
-				imageViewSwitch[2].setImageResource(switches[2] ? R.drawable.switch_on : R.drawable.switch_off);
-			}
-		});
-
-		imageViewSwitch[3] = (ImageView) findViewById(R.id.imageViewSwitch4);
-		imageViewSwitch[3].setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				switches[3] = !switches[3];
-				imageViewSwitch[3].setImageResource(switches[3] ? R.drawable.switch_on : R.drawable.switch_off);
+				switches = !switches;
+				imageViewSwitch.setImageResource(switches ? R.drawable.switch_on : R.drawable.switch_off);
 			}
 		});
 
@@ -128,30 +112,62 @@ public class AlarmActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
+				SharedValues.addDateTime(getApplicationContext(), switchEveryday.isChecked() ? SharedValues.KEY_EVERYDAY : SharedValues.KEY_ONETIME, new DateTimeItem(editTextDateTime.getText().toString(), switches));
+				if (switchEveryday.isChecked())
+					listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
+				else
+					listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
+				
+				editTextDateTime.setText("");
+			}
+		});
+		
+		editTextDateTime.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				// TODO Auto-generated method stub
-
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				if (editTextDateTime.getText().toString().equals("")) {
+					buttonSend.setVisibility(View.GONE);
+					imageViewSwitch.setVisibility(View.GONE);
+					switchEveryday.setVisibility(View.GONE);
+				}
+				else {
+					buttonSend.setVisibility(View.VISIBLE);
+					imageViewSwitch.setVisibility(View.VISIBLE);
+					switchEveryday.setVisibility(View.VISIBLE);
+				}
 			}
 		});
 
 		listViewDateTime = (ListView) findViewById(R.id.listViewDateTime);
-		ArrayList<DateTime> dt = new ArrayList<AlarmActivity.DateTime>();
-		dt.add(new DateTime("2015-11-24", "02:13"));
-		dt.add(new DateTime("2015-11-25", "06:40"));
-		listViewDateTime.setAdapter(new ListViewRoeAdapter(getApplicationContext(), dt));
+		listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
 		
 		listViewTime = (ListView) findViewById(R.id.listViewTime);
-		ArrayList<DateTime> d = new ArrayList<AlarmActivity.DateTime>();
-		d.add(new DateTime("", "02:13"));
-		d.add(new DateTime("", "06:40"));
-		listViewTime.setAdapter(new ListViewRoeAdapter(getApplicationContext(), d));
+		listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
+		
+		buttonSend.setVisibility(View.GONE);
+		imageViewSwitch.setVisibility(View.GONE);
+		switchEveryday.setVisibility(View.GONE);
 	}
 
-	private class ListViewRoeAdapter extends BaseAdapter {
+	private class ListViewRowAdapter extends BaseAdapter {
 
 		private Context context;
-		private ArrayList<DateTime> datetime;
+		private ArrayList<DateTimeItem> datetime;
 
-		public ListViewRoeAdapter(Context context, ArrayList<DateTime> datetime) {
+		public ListViewRowAdapter(Context context, ArrayList<DateTimeItem> datetime) {
 			this.context = context;
 			this.datetime = datetime;
 		}
@@ -172,11 +188,14 @@ public class AlarmActivity extends FragmentActivity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			if (convertView == null)
 				convertView = mInflater.inflate(R.layout.listview_row, parent, false);
+			
+			ImageView imageViewSwitch = (ImageView) convertView.findViewById(R.id.imageViewSwitch);
+			imageViewSwitch.setImageResource(datetime.get(position).getState() ? R.drawable.switch_on : R.drawable.switch_off);
 			
 			TextView textViewTime = (TextView) convertView.findViewById(R.id.textViewTime);
 			textViewTime.setText(datetime.get(position).getTime());
@@ -184,23 +203,19 @@ public class AlarmActivity extends FragmentActivity {
 			TextView textViewDate = (TextView) convertView.findViewById(R.id.textViewDate);
 			textViewDate.setText(datetime.get(position).getDate());
 			
-			Button buttonEdit = (Button) convertView.findViewById(R.id.buttonEdit);
-			buttonEdit.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+			final String KEY = datetime.get(position).getDate().equals("") ? SharedValues.KEY_EVERYDAY : SharedValues.KEY_ONETIME;
+			final DateTimeItem ITEM = datetime.get(position);
 			
 			Button buttonDelete = (Button) convertView.findViewById(R.id.buttonDelete);
 			buttonDelete.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					SharedValues.removeDateTime(getApplicationContext(), KEY, ITEM);
+					if (KEY.equals(SharedValues.KEY_EVERYDAY))
+						listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
+					else
+						listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
 				}
 			});
 			
@@ -211,31 +226,5 @@ public class AlarmActivity extends FragmentActivity {
 			return convertView;
 		}
 
-	}
-
-	private class DateTime {
-		private String date;
-		private String time;
-
-		public DateTime(String date, String time) {
-			this.date = date;
-			this.time = time;
-		}
-
-		public String getDate() {
-			return date;
-		}
-
-		public void setDate(String date) {
-			this.date = date;
-		}
-
-		public String getTime() {
-			return time;
-		}
-
-		public void setTime(String time) {
-			this.time = time;
-		}
 	}
 }

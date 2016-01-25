@@ -10,59 +10,50 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kmitl.smartplug.AlarmActivity" >
 
-    <Switch
-        android:id="@+id/switchEveryday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ทุกวัน" />
-
-    <EditText
-        android:id="@+id/editTextDateTime"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
-    </EditText>
+        android:gravity="center"
+        android:text="Alarm" />
+
+    
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4" >
+        android:weightSum="10"
+        android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/imageViewSwitch1"
+        <EditText
+            android:id="@+id/editTextDateTime"
+            android:hint="Add new"
             android:layout_width="0px"
-            android:layout_height="450px"
-            android:layout_weight="1"
-            android:src="@drawable/switch_off" />
+            android:layout_height="wrap_content"
+            android:layout_weight="9"  >
 
-        <ImageView
-            android:id="@+id/imageViewSwitch2"
-            android:layout_width="0px"
-            android:layout_height="450px"
-            android:layout_weight="1"
-            android:src="@drawable/switch_off" />
+            <requestFocus />
+        </EditText>
 
-        <ImageView
-            android:id="@+id/imageViewSwitch3"
-            android:layout_width="0px"
-            android:layout_height="450px"
+        <Button
+            android:id="@+id/buttonClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/switch_off" />
+            android:text="Clear" />
 
-        <ImageView
-            android:id="@+id/imageViewSwitch4"
-            android:layout_width="0px"
-            android:layout_height="450px"
-            android:layout_weight="1"
-            android:src="@drawable/switch_off" />
     </LinearLayout>
+
+    <Switch android:id="@+id/switchEveryday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ทุกวัน" /><ImageView
+        android:id="@+id/imageViewSwitch"
+        android:layout_width="450px"
+        android:layout_height="450px"
+        android:src="@drawable/switch_off" />
 
     <Button
         android:id="@+id/buttonSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send" />
+        android:text="Add" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:fillViewport="true"
+            android:background="#E0F8EC"
             android:layout_weight="1" >
 
             <LinearLayout
@@ -85,6 +77,7 @@
                     android:id="@+id/listViewDateTime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="20px"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true" />
             </LinearLayout>
@@ -94,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:fillViewport="true"
+            android:background="#E0E6F8"
             android:layout_weight="1" >
 
             <LinearLayout
@@ -105,6 +99,7 @@
                     android:id="@+id/listViewTime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="20px"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true" />
             </LinearLayout>
