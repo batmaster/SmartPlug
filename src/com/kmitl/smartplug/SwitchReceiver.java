@@ -28,7 +28,7 @@ public class SwitchReceiver extends BroadcastReceiver {
 		
 		ArrayList<DateTimeItem> dtl = SharedValues.getDateTimeList(context, SharedValues.KEY_ONETIME);
 		ArrayList<DateTimeItem> tl = SharedValues.getDateTimeList(context, SharedValues.KEY_EVERYDAY);
-		Toast.makeText(context, "check alarm: " + new Date(), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(context, "check alarm: " + new Date(), Toast.LENGTH_SHORT).show();
 		
 		for (int i = 0; i < dtl.size(); i++) {
 			if (dtl.get(i).getDateTime().compareTo(dti.getDateTime()) < 0) {

@@ -56,10 +56,10 @@ public final class R {
         public static final int editTextPort=0x7f09000a;
         public static final int editTextSsid=0x7f090014;
         public static final int imageViewAlarm=0x7f090012;
-        public static final int imageViewBulb=0x7f090010;
+        public static final int imageViewBulb=0x7f09000f;
         public static final int imageViewRefresh=0x7f090011;
         public static final int imageViewSetting=0x7f090013;
-        public static final int imageViewSwitch=0x7f09000f;
+        public static final int imageViewSwitch=0x7f090010;
         public static final int linearLayoutOutlet1=0x7f09000e;
         public static final int listViewDateTime=0x7f090006;
         public static final int listViewTime=0x7f090007;

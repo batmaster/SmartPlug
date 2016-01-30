@@ -63,15 +63,15 @@ public class ConnectActivity extends Activity {
 				Service.setPerference(getApplicationContext(), "ip", editTextIp.getText().toString());
 				Service.setPerference(getApplicationContext(), "port", editTextPort.getText().toString());
 				
-//				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
-//				task.execute();
+				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
+				task.execute();
 				
 //				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
 //				startActivity(intent);
 				
-				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
-				intent.putExtra("the8Digits", "00");
-				startActivity(intent);
+//				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
+//				intent.putExtra("the8Digits", "00");
+//				startActivity(intent);
 //				finish();
 			}
 		});
@@ -83,7 +83,7 @@ public class ConnectActivity extends Activity {
 			Intent alarmIntent = new Intent(getApplicationContext(), SwitchReceiver.class);
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 19096, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 			AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 20000, pendingIntent);
+			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);
 		}
 	}
 	
