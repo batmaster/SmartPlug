@@ -16,4 +16,10 @@
         android:gravity="center"
         android:text="Setting" />
 
+    <Button
+        android:id="@+id/buttonSetWifi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Wifi" />
+
 </LinearLayout>

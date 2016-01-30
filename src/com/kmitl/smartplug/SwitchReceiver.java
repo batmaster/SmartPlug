@@ -13,6 +13,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class SwitchReceiver extends BroadcastReceiver {
+	
+	private static int i = 0;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -26,6 +28,7 @@ public class SwitchReceiver extends BroadcastReceiver {
 		
 		ArrayList<DateTimeItem> dtl = SharedValues.getDateTimeList(context, SharedValues.KEY_ONETIME);
 		ArrayList<DateTimeItem> tl = SharedValues.getDateTimeList(context, SharedValues.KEY_EVERYDAY);
+		Toast.makeText(context, "check alarm: " + new Date(), Toast.LENGTH_SHORT).show();
 		
 		for (int i = 0; i < dtl.size(); i++) {
 			if (dtl.get(i).getDateTime().compareTo(dti.getDateTime()) < 0) {
@@ -62,7 +65,7 @@ private class SwitchTask extends AsyncTask<Void, Void, String> {
 		
 		@Override
 		protected void onPreExecute() {
-			Toast.makeText(context, "SendCommend: " + (toState ? "1" : "0"), Toast.LENGTH_SHORT).show();
+			
 		}
 
 		@Override
@@ -73,7 +76,7 @@ private class SwitchTask extends AsyncTask<Void, Void, String> {
 		@Override
 		protected void onPostExecute(String result) {
 
-			Toast.makeText(context, " fin SendCommend: " + (toState ? "1" : "0"), Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "alarm: " + (toState ? "1" : "0") + " " + new Date(), Toast.LENGTH_SHORT).show();
 		}
 	}
 

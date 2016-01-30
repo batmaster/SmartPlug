@@ -218,11 +218,7 @@ public class AlarmActivity extends FragmentActivity {
 						listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
 				}
 			});
-			
-			
-			
-			
-			
+
 			return convertView;
 		}
 

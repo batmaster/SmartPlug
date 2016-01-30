@@ -16,7 +16,7 @@ public class BootReceiver extends BroadcastReceiver {
 			Intent alarmIntent = new Intent(context, SwitchReceiver.class);
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 19096, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 			AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);	
+			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 20000, pendingIntent);	
 		}
 	}
 
