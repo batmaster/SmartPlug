@@ -5,13 +5,11 @@
     android:orientation="horizontal"
     android:weightSum="12" >
 
-    <ImageView
-        android:id="@+id/imageViewSwitch"
-        android:layout_width="100px"
-        android:layout_height="100px"
-        android:layout_margin="10px"
-        android:layout_weight="1"
-        android:src="@drawable/switch_off" />
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="0px"

@@ -57,7 +57,7 @@ public class AlarmActivity extends FragmentActivity {
 		}
 	};
 
-	private ImageView imageViewSwitch;
+	private Switch switch1;
 	private boolean switches;
 
 	@Override
@@ -97,13 +97,13 @@ public class AlarmActivity extends FragmentActivity {
 		});
 		
 
-		imageViewSwitch = (ImageView) findViewById(R.id.imageViewSwitch);
-		imageViewSwitch.setOnClickListener(new OnClickListener() {
+		switch1 = (Switch) findViewById(R.id.switch1);
+		switch1.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				switches = !switches;
-				imageViewSwitch.setImageResource(switches ? R.drawable.switch_on : R.drawable.switch_off);
+				switch1.setChecked(switches);
 			}
 		});
 
@@ -140,12 +140,12 @@ public class AlarmActivity extends FragmentActivity {
 			public void afterTextChanged(Editable arg0) {
 				if (editTextDateTime.getText().toString().equals("")) {
 					buttonSend.setVisibility(View.GONE);
-					imageViewSwitch.setVisibility(View.GONE);
+					switch1.setVisibility(View.GONE);
 					switchEveryday.setVisibility(View.GONE);
 				}
 				else {
 					buttonSend.setVisibility(View.VISIBLE);
-					imageViewSwitch.setVisibility(View.VISIBLE);
+					switch1.setVisibility(View.VISIBLE);
 					switchEveryday.setVisibility(View.VISIBLE);
 				}
 			}
@@ -158,7 +158,7 @@ public class AlarmActivity extends FragmentActivity {
 		listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
 		
 		buttonSend.setVisibility(View.GONE);
-		imageViewSwitch.setVisibility(View.GONE);
+		switch1.setVisibility(View.GONE);
 		switchEveryday.setVisibility(View.GONE);
 	}
 
@@ -194,8 +194,9 @@ public class AlarmActivity extends FragmentActivity {
 			if (convertView == null)
 				convertView = mInflater.inflate(R.layout.listview_row, parent, false);
 			
-			ImageView imageViewSwitch = (ImageView) convertView.findViewById(R.id.imageViewSwitch);
-			imageViewSwitch.setImageResource(datetime.get(position).getState() ? R.drawable.switch_on : R.drawable.switch_off);
+			Switch switch1 = (Switch) convertView.findViewById(R.id.switch1);
+			switch1.setChecked((datetime.get(position).getState()));
+			switch1.setClickable(false);
 			
 			TextView textViewTime = (TextView) convertView.findViewById(R.id.textViewTime);
 			textViewTime.setText(datetime.get(position).getTime());

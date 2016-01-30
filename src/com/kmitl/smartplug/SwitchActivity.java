@@ -165,9 +165,9 @@ public class SwitchActivity extends Activity {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("‡πÄ‡∏ä‡∏∑‡πà‡∏≠‡∏°‡∏ï‡πà‡∏≠‡πÑ‡∏°‡πà‡πÑ‡∏î‡πâ");
+					alert.setMessage("‡™◊ËÕ¡µËÕ‰¡Ë‰¥È");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("‡∏•‡∏≠‡∏á‡∏´‡∏•‡∏≤‡∏¢‡∏£‡∏≠‡∏ö‡πÅ‡∏•‡πâ‡∏ß");
+					alert.setMessage("≈ÕßÀ≈“¬√Õ∫·≈È«");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
@@ -232,9 +232,9 @@ public class SwitchActivity extends Activity {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("‡πÄ‡∏ä‡∏∑‡πà‡∏≠‡∏°‡∏ï‡πà‡∏≠‡πÑ‡∏°‡πà‡πÑ‡∏î‡πâ");
+					alert.setMessage("‡™◊ËÕ¡µËÕ‰¡Ë‰¥È");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("‡∏•‡∏≠‡∏á‡∏´‡∏•‡∏≤‡∏¢‡∏£‡∏≠‡∏ö‡πÅ‡∏•‡πâ‡∏ß");
+					alert.setMessage("≈ÕßÀ≈“¬√Õ∫·≈È«");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);

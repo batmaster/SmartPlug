@@ -16,20 +16,18 @@
         android:gravity="center"
         android:text="Alarm" />
 
-    
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="10"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="10" >
 
         <EditText
             android:id="@+id/editTextDateTime"
-            android:hint="Add new"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_weight="9"  >
+            android:layout_weight="9"
+            android:hint="Add new" >
 
             <requestFocus />
         </EditText>
@@ -40,14 +38,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Clear" />
-
     </LinearLayout>
 
-    <Switch android:id="@+id/switchEveryday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ทุกวัน" /><ImageView
-        android:id="@+id/imageViewSwitch"
-        android:layout_width="450px"
-        android:layout_height="450px"
-        android:src="@drawable/switch_off" />
+    <Switch
+        android:id="@+id/switchEveryday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ทุกวัน" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="เปิด"
+        android:textOff="ปิด" />
 
     <Button
         android:id="@+id/buttonSend"
@@ -64,9 +68,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:fillViewport="true"
+            android:layout_weight="1"
             android:background="#E0F8EC"
-            android:layout_weight="1" >
+            android:fillViewport="true" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,18 +81,18 @@
                     android:id="@+id/listViewDateTime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="20px"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:padding="20px" />
             </LinearLayout>
         </ScrollView>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:fillViewport="true"
+            android:layout_weight="1"
             android:background="#E0E6F8"
-            android:layout_weight="1" >
+            android:fillViewport="true" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,9 +103,9 @@
                     android:id="@+id/listViewTime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="20px"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:padding="20px" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
