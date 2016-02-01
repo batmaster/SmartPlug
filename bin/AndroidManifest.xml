@@ -44,13 +44,12 @@
             </intent-filter>
         </activity>
         
-        <receiver
-            android:name=".SwitchReceiver"
-            android:enabled="true" >
-        </receiver>
-        <receiver android:name=".BootReceiver" >
+        <service android:name=".SwitchService" />
+        
+        <receiver android:name=".Receiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_TICK" />
             </intent-filter>
         </receiver>
 

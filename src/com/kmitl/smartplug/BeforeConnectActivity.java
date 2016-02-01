@@ -1,8 +1,15 @@
 package com.kmitl.smartplug;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class BeforeConnectActivity extends Activity {
-	
+
 	private Button buttonDirectMode;
 	private TextView textView1;
 	
@@ -23,6 +30,8 @@ public class BeforeConnectActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_before_connect);
+		
+		startService(new Intent(getApplicationContext(), SwitchService.class));
 		
 		buttonDirectMode = (Button) findViewById(R.id.buttonDirectMode);
 		buttonDirectMode.setOnClickListener(new OnClickListener() {

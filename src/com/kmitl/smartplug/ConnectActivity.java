@@ -100,26 +100,6 @@ public class ConnectActivity extends Activity {
 				finish();
 			}
 		});
-		
-		boolean start = isServiceRunning(SwitchReceiver.class);
-		if (!start) {
-			Toast.makeText(getApplicationContext(), "start from main", Toast.LENGTH_SHORT).show();
-			
-			Intent alarmIntent = new Intent(getApplicationContext(), SwitchReceiver.class);
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 19096, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);
-		}
-	}
-	
-	private boolean isServiceRunning(Class<?> serviceClass) {
-	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	        if (serviceClass.getName().equals(service.service.getClassName())) {
-	            return true;
-	        }
-	    }
-	    return false;
 	}
 	
 	private class TryToConnectTask extends AsyncTask<Void, Void, String> {
