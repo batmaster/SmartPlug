@@ -21,8 +21,6 @@ public class Receiver extends BroadcastReceiver {
 			context.startService(new Intent(context, SwitchService.class));
 		}
 		else if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
-			Toast.makeText(context, "from br " + new Date(), Toast.LENGTH_SHORT).show();
-			Log.d("timet", "from br " + new Date());
 
 			Date now = new Date();
 			
