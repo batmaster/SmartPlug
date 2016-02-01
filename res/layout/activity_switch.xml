@@ -11,11 +11,12 @@
     tools:context="com.kmitl.smartplug.SwitchActivity" >
 
     <TextView
-        android:id="@+id/textViewStatus"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView0"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Status" />
+        android:gravity="center"
+        android:text="Smart Plug Connect"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
         android:id="@+id/linearLayoutOutlet1"
@@ -57,16 +58,22 @@
         android:layout_height="wrap_content"
         android:src="@drawable/refresh" />
 
-    <ImageView
-        android:id="@+id/imageViewAlarm"
+    <TextView
+        android:id="@+id/textViewSetAlarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/refresh" />
-    
-    <ImageView
-        android:id="@+id/imageViewSetting"
+        android:text="Time Setting"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewSetWifi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/refresh" />
+        android:text="WiFi Setting"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

@@ -23,19 +23,20 @@ import android.widget.Toast;
 
 public class SwitchActivity extends Activity {
 	
-	private TextView textViewStatus;
+	private TextView textView0;
 	private ImageView imageViewRefresh;
-	private ImageView imageViewAlarm;
-	private ImageView imageViewSetting;
 	private ImageView imageViewSwitch;
 	private ImageView imageViewBulb;
+	private TextView textViewSetAlarm;
+	private TextView textViewSetWifi;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_switch);
 		
-		textViewStatus = (TextView) findViewById(R.id.textViewStatus);
+		textView0 = (TextView) findViewById(R.id.textView0);
+		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " Alarm Setting");
 		
 		imageViewRefresh = (ImageView) findViewById(R.id.imageViewRefresh);
 		imageViewRefresh.setOnClickListener(new OnClickListener() {
@@ -44,26 +45,6 @@ public class SwitchActivity extends Activity {
 			public void onClick(View v) {
 				CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
             	task.execute();
-			}
-		});
-		
-		imageViewAlarm = (ImageView) findViewById(R.id.imageViewAlarm);
-		imageViewAlarm.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
-				startActivity(intent);
-			}
-		});
-		
-		imageViewSetting = (ImageView) findViewById(R.id.imageViewSetting);
-		imageViewSetting.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-				startActivity(intent);
 			}
 		});
 		
@@ -84,30 +65,27 @@ public class SwitchActivity extends Activity {
 		
 		imageViewBulb = (ImageView) findViewById(R.id.imageViewBulb);
 		
-//		setRepeatingAsyncTask();
+		textViewSetAlarm = (TextView) findViewById(R.id.textViewSetAlarm);
+		textViewSetAlarm.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		textViewSetWifi = (TextView) findViewById(R.id.textViewSetWifi);
+		textViewSetWifi.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+				startActivity(intent);
+			}
+		});
+		
 		refreshStatus(getIntent().getStringExtra("the8Digits"));
-	}
-	
-	private void setRepeatingAsyncTask() {
-
-	    final Handler handler = new Handler();
-	    Timer timer = new Timer();
-
-	    TimerTask task = new TimerTask() {       
-	        @Override
-	        public void run() {
-	            handler.post(new Runnable() {
-	            	public void run() {
-	            		if (ready) {
-		                	CheckStateTask task = new CheckStateTask(getApplicationContext(), false);
-		                	task.execute();
-	            		}
-	                }
-	            });
-	        }
-	    };
-
-	    timer.schedule(task, 1 * 1000, 15 * 1000);
 	}
 	
 	private void refreshStatus(String the8Digits) {
@@ -135,8 +113,6 @@ public class SwitchActivity extends Activity {
 			Log.d("p", "CheckStateTask: Pre");
 			ready = false;
 			
-			textViewStatus.setText("Checking...");
-						
 			dialog.setMessage("Checking state...");
 			if (!dialog.isShowing() && showDialog) {
 				dialog.show();
@@ -158,24 +134,20 @@ public class SwitchActivity extends Activity {
 			
 			if (result.length() == 8 || result.length() == 2) {
 				refreshStatus(result);
-				
-				textViewStatus.setText("Ready: " + result);
 			}
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("‡™◊ËÕ¡µËÕ‰¡Ë‰¥È");
+					alert.setMessage("‡∏ï‡∏¥‡∏î‡∏ï‡πà‡∏≠‡∏ö‡∏≠‡∏£‡πå‡∏î‡πÑ‡∏°‡πà‡πÑ‡∏î‡πâ");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("≈ÕßÀ≈“¬√Õ∫·≈È«");
+					alert.setMessage("‡∏ï‡∏¥‡∏î‡∏ï‡πà‡∏≠‡∏ö‡∏≠‡∏£‡πå‡∏î‡πÑ‡∏°‡πà‡πÑ‡∏î‡πâ");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
 				d = alert.create();
 				d.setCanceledOnTouchOutside(true);
 				d.show();
-				
-				textViewStatus.setText("Ready: " + result);
 			}
 			
 			ready = true;
@@ -202,7 +174,6 @@ public class SwitchActivity extends Activity {
 		protected void onPreExecute() {
 			Log.d("p", "SwitchTask: Pre");
 			ready = false;
-			textViewStatus.setText("Sending command...");
 			
 			dialog.setMessage("Sending command...");
 			if (!dialog.isShowing()) {
@@ -232,18 +203,16 @@ public class SwitchActivity extends Activity {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("‡™◊ËÕ¡µËÕ‰¡Ë‰¥È");
+					alert.setMessage("‡∏ï‡∏¥‡∏î‡∏ï‡πà‡∏≠‡∏ö‡∏≠‡∏£‡πå‡∏î‡πÑ‡∏°‡πà‡πÑ‡∏î‡πâ");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("≈ÕßÀ≈“¬√Õ∫·≈È«");
+					alert.setMessage("‡∏ï‡∏¥‡∏î‡∏ï‡πà‡∏≠‡∏ö‡∏≠‡∏£‡πå‡∏î‡πÑ‡∏°‡πà‡πÑ‡∏î‡πâ");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
 				d = alert.create();
 				d.setCanceledOnTouchOutside(true);
 				d.show();
-			}			
-			
-			textViewStatus.setText("Ready");
+			}
 			ready = true;
 		}
 	}

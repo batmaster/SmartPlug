@@ -19,7 +19,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -77,21 +80,28 @@ public class SharedValues {
 		
 		return dtl;
 	}
-//	
-//	public static void setStringPref(Context context, String key, String value) {
-//		SharedPreferences sp = context.getSharedPreferences(TOT_PREF_SETTINGS, Context.MODE_PRIVATE);
-//		SharedPreferences.Editor editor = sp.edit();
-//		editor.putString(key, value);
-//		editor.commit();
-//	}
-//
-//	public static String getStringPref(Context context, String key) {
-//		SharedPreferences sp = context.getSharedPreferences(TOT_PREF_SETTINGS, Context.MODE_PRIVATE);
-//		return sp.getString(key, null);
-//	}
-//
-//	public static boolean getStateProvince(Context context, String province) {
-//		return getBooleanPref(context, province);
-//	}
 	
+	public static void setModePref(Context context, String value) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString("mode", value);
+		editor.commit();
+	}
+
+	public static String getModePref(Context context) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		return sp.getString("mode", null);
+	}
+	
+	public static void showDialog(Context context, String message) {
+		new AlertDialog.Builder(context)
+        .setMessage(message)
+        .setCancelable(true)
+        .setPositiveButton("ok", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create().show();
+	}
 }

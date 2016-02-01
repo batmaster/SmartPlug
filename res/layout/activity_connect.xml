@@ -11,54 +11,70 @@
     tools:context="com.kmitl.smartplug.ConnectActivity" >
 
     <TextView
+        android:id="@+id/textView0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Smart Plug Connect"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter IP Address" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="12" >
 
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="IP:" />
-
         <EditText
             android:id="@+id/editTextIp"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:layout_weight="10"
             android:hint="Ex. 192.168.2.30"
             android:ems="10" >
 
             <requestFocus />
         </EditText>
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="\?"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Port" />
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="12" >
 
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Port:" />
-
         <EditText
             android:id="@+id/editTextPort"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:layout_weight="10"
             android:hint="90"
             android:ems="10" >
         </EditText>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="\?"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
 

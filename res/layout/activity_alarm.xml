@@ -9,55 +9,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.kmitl.smartplug.AlarmActivity" >
-
+    
     <TextView
+        android:id="@+id/textView0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Alarm" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10" >
-
-        <EditText
-            android:id="@+id/editTextDateTime"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:hint="Add new" >
-
-            <requestFocus />
-        </EditText>
-
-        <Button
-            android:id="@+id/buttonClear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Clear" />
-    </LinearLayout>
-
-    <Switch
-        android:id="@+id/switchEveryday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ทุกวัน" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn="เปิด"
-        android:textOff="ปิด" />
-
+        android:text="Smart Plug Connect"
+        android:layout_marginBottom="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
     <Button
-        android:id="@+id/buttonSend"
+        android:id="@+id/buttonAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add" />
+        android:text="Add new" />
 
     <LinearLayout
         android:layout_width="match_parent"

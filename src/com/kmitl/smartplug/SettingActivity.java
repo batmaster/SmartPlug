@@ -13,16 +13,21 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingActivity extends Activity {
 	
+	private TextView textView0;
 	private Button buttonSetWifi;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
+		
+		textView0 = (TextView) findViewById(R.id.textView0);
+		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " WiFi Setting");
 		
 		buttonSetWifi = (Button) findViewById(R.id.buttonSetWifi);
 		buttonSetWifi.setOnClickListener(new OnClickListener() {
@@ -31,7 +36,7 @@ public class SettingActivity extends Activity {
 			public void onClick(View arg0) {
 				final Dialog dialog = new Dialog(SettingActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.custom_dialog);
+                dialog.setContentView(R.layout.custom_dialog_setting);
                 dialog.setCancelable(true);
                 
                 final EditText editTextSsid = (EditText) dialog.findViewById(R.id.editTextSsid);

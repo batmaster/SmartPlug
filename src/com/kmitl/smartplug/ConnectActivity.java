@@ -23,12 +23,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ConnectActivity extends Activity {
 	
+	private TextView textView0;
 	private EditText editTextIp;
+	private TextView textView1;
 	private EditText editTextPort;
+	private TextView textView2;
 	private Button buttonClear;
 	private Button buttonConnect;
 	
@@ -38,11 +42,32 @@ public class ConnectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_connect);
 		
+		textView0 = (TextView) findViewById(R.id.textView0);
+		textView0.setText(SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode");
+		
 		editTextIp = (EditText) findViewById(R.id.editTextIp);
 		editTextIp.setText(Service.getPreference(getApplicationContext(), "ip"));
 		
+		textView1 = (TextView) findViewById(R.id.textView1);
+		textView1.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SharedValues.showDialog(ConnectActivity.this, SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Your private IP" : "Your public IP");
+			}
+		});
+		
 		editTextPort = (EditText) findViewById(R.id.editTextPort);
 		editTextPort.setText(Service.getPreference(getApplicationContext(), "port"));
+		
+		textView2 = (TextView) findViewById(R.id.textView2);
+		textView2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SharedValues.showDialog(ConnectActivity.this, "Port from Smart Plug");
+			}
+		});
 		
 		buttonClear = (Button) findViewById(R.id.buttonClear);
 		buttonClear.setOnClickListener(new OnClickListener() {
@@ -63,16 +88,16 @@ public class ConnectActivity extends Activity {
 				Service.setPerference(getApplicationContext(), "ip", editTextIp.getText().toString());
 				Service.setPerference(getApplicationContext(), "port", editTextPort.getText().toString());
 				
-				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
-				task.execute();
+//				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
+//				task.execute();
 				
 //				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
 //				startActivity(intent);
 				
-//				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
-//				intent.putExtra("the8Digits", "00");
-//				startActivity(intent);
-//				finish();
+				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
+				intent.putExtra("the8Digits", "00");
+				startActivity(intent);
+				finish();
 			}
 		});
 		

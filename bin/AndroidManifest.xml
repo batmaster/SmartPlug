@@ -19,37 +19,41 @@
         <activity
             android:name=".ConnectActivity"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".SwitchActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".AlarmActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+            android:name=".BeforeConnectActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SwitchActivity"
-            android:label="@string/title_activity_switch" >
-        </activity>
-        <activity
-            android:name=".AlarmActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_alarm" >
-        </activity>
-        <activity
-            android:name=".SettingActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
         
-         <receiver
+        <receiver
             android:name=".SwitchReceiver"
             android:enabled="true" >
-      	</receiver>
-      	
-        <receiver
-            android:name=".BootReceiver" >
+        </receiver>
+        <receiver android:name=".BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-      	</receiver>
+        </receiver>
+
     </application>
 
 </manifest>

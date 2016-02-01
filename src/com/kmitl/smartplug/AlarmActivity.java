@@ -9,6 +9,7 @@ import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -37,129 +39,141 @@ import android.widget.Toast;
 
 public class AlarmActivity extends FragmentActivity {
 
-	private Switch switchEveryday;
-	private EditText editTextDateTime;
-	private Button buttonClear;
-
-	private Button buttonSend;
+	private TextView textView0;
+	private Button buttonAdd;
 	private ListView listViewDateTime;
 	private ListView listViewTime;
-
 	
-
 	private Date date;
-	private SlideDateTimeListener listener = new SlideDateTimeListener() {
-
-		@Override
-		public void onDateTimeSet(Date date) {
-			AlarmActivity.this.date = date;
-			editTextDateTime.setText(switchEveryday.isChecked() ? SharedValues.sdf_everyday.format(date) : SharedValues.sdf.format(date));
-		}
-	};
-
-	private Switch switch1;
 	private boolean switches;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm);
-
-		switchEveryday = (Switch) findViewById(R.id.switchEveryday);
-		switchEveryday.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (date != null)
-					editTextDateTime.setText(isChecked ? SharedValues.sdf_everyday.format(date) : SharedValues.sdf.format(date));
-				
-			}
-		});
-
-		editTextDateTime = (EditText) findViewById(R.id.editTextDateTime);
-		editTextDateTime.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				new SlideDateTimePicker.Builder(getSupportFragmentManager()).setIs24HourTime(true).setListener(listener)
-						.setInitialDate(new Date()).build().show();
-			}
-		});
-		editTextDateTime.setInputType(InputType.TYPE_NULL);
 		
-		buttonClear = (Button) findViewById(R.id.buttonClear);
-		buttonClear.setOnClickListener(new OnClickListener() {
-			
+		textView0 = (TextView) findViewById(R.id.textView0);
+		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " ON/OFF");
+
+		buttonAdd = (Button) findViewById(R.id.buttonAdd);
+		buttonAdd.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				editTextDateTime.setText("");
+				
+				final Dialog dialog = new Dialog(AlarmActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.custom_dialog_alarm);
+                dialog.setCancelable(true);
+                
+                final EditText editTextDateTime = (EditText) dialog.findViewById(R.id.editTextDateTime);
+        		Button buttonClear = (Button) dialog.findViewById(R.id.buttonClear);
+            	final Switch switchEveryday = (Switch) dialog.findViewById(R.id.switchEveryday);
+                final Switch switch1 = (Switch) dialog.findViewById(R.id.switch1);
+        		final Button buttonAdd = (Button) dialog.findViewById(R.id.buttonAdd);
+                
+				final SlideDateTimeListener listener = new SlideDateTimeListener() {
+
+					@Override
+					public void onDateTimeSet(Date d) {
+						AlarmActivity.this.date = d;
+						editTextDateTime.setText(switchEveryday.isChecked() ? SharedValues.sdf_everyday.format(date) : SharedValues.sdf.format(date));
+					}
+				};
+                
+        		switchEveryday.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+        			@Override
+        			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        				if (date != null)
+        					editTextDateTime.setText(isChecked ? SharedValues.sdf_everyday.format(date) : SharedValues.sdf.format(date));
+        				
+        			}
+        		});
+        		
+        		editTextDateTime.setOnClickListener(new OnClickListener() {
+
+        			@Override
+        			public void onClick(View v) {
+        				new SlideDateTimePicker.Builder(getSupportFragmentManager()).setIs24HourTime(true).setListener(listener)
+        						.setInitialDate(new Date()).build().show();
+        			}
+        		});
+        		editTextDateTime.setInputType(InputType.TYPE_NULL);
+        		editTextDateTime.addTextChangedListener(new TextWatcher() {
+        			
+        			@Override
+        			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+        				// TODO Auto-generated method stub
+        				
+        			}
+        			
+        			@Override
+        			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+        				// TODO Auto-generated method stub
+        				
+        			}
+        			
+        			@Override
+        			public void afterTextChanged(Editable arg0) {
+        				if (editTextDateTime.getText().toString().equals("")) {
+        					buttonAdd.setVisibility(View.GONE);
+        					switch1.setVisibility(View.GONE);
+        					switchEveryday.setVisibility(View.GONE);
+        				}
+        				else {
+        					buttonAdd.setVisibility(View.VISIBLE);
+        					switch1.setVisibility(View.VISIBLE);
+        					switchEveryday.setVisibility(View.VISIBLE);
+        				}
+        			}
+        		});
+        		
+        		buttonClear.setOnClickListener(new OnClickListener() {
+        			
+        			@Override
+        			public void onClick(View v) {
+        				editTextDateTime.setText("");
+        			}
+        		});
+        		
+        		switch1.setOnClickListener(new OnClickListener() {
+
+        			@Override
+        			public void onClick(View v) {
+        				AlarmActivity.this.switches = !switches;
+        				switch1.setChecked(switches);
+        			}
+        		});
+        		
+        		buttonAdd.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						SharedValues.addDateTime(getApplicationContext(), switchEveryday.isChecked() ? SharedValues.KEY_EVERYDAY : SharedValues.KEY_ONETIME, new DateTimeItem(editTextDateTime.getText().toString(), switches));
+						if (switchEveryday.isChecked())
+							listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
+						else
+							listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
+						
+						editTextDateTime.setText("");
+						dialog.dismiss();
+					}
+				});
+        		
+        		buttonAdd.setVisibility(View.GONE);
+        		switch1.setVisibility(View.GONE);
+        		switchEveryday.setVisibility(View.GONE);
+
+                dialog.show();
 			}
 		});
 		
-
-		switch1 = (Switch) findViewById(R.id.switch1);
-		switch1.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				switches = !switches;
-				switch1.setChecked(switches);
-			}
-		});
-
-		buttonSend = (Button) findViewById(R.id.buttonSend);
-		buttonSend.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				SharedValues.addDateTime(getApplicationContext(), switchEveryday.isChecked() ? SharedValues.KEY_EVERYDAY : SharedValues.KEY_ONETIME, new DateTimeItem(editTextDateTime.getText().toString(), switches));
-				if (switchEveryday.isChecked())
-					listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
-				else
-					listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
-				
-				editTextDateTime.setText("");
-			}
-		});
-		
-		editTextDateTime.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void afterTextChanged(Editable arg0) {
-				if (editTextDateTime.getText().toString().equals("")) {
-					buttonSend.setVisibility(View.GONE);
-					switch1.setVisibility(View.GONE);
-					switchEveryday.setVisibility(View.GONE);
-				}
-				else {
-					buttonSend.setVisibility(View.VISIBLE);
-					switch1.setVisibility(View.VISIBLE);
-					switchEveryday.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-
 		listViewDateTime = (ListView) findViewById(R.id.listViewDateTime);
 		listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
 		
 		listViewTime = (ListView) findViewById(R.id.listViewTime);
 		listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
-		
-		buttonSend.setVisibility(View.GONE);
-		switch1.setVisibility(View.GONE);
-		switchEveryday.setVisibility(View.GONE);
 	}
 
 	private class ListViewRowAdapter extends BaseAdapter {
