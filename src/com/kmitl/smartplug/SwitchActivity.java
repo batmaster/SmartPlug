@@ -91,6 +91,9 @@ public class SwitchActivity extends Activity {
 	private void refreshStatus(String the8Digits) {
 			imageViewSwitch.setImageResource(the8Digits.charAt(1) == '1' ? R.drawable.switch_off : R.drawable.switch_on);
 			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
+			
+			if (the8Digits.charAt(0) != the8Digits.charAt(1))
+				SharedValues.showDialog(getApplicationContext(), "Appliance has problem!");
 	}
 	
 	private boolean ready = true;
@@ -132,7 +135,7 @@ public class SwitchActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.length() == 8 || result.length() == 2) {
+			if (result.length() == 2) {
 				refreshStatus(result);
 			}
 			else {

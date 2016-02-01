@@ -88,16 +88,16 @@ public class ConnectActivity extends Activity {
 				Service.setPerference(getApplicationContext(), "ip", editTextIp.getText().toString());
 				Service.setPerference(getApplicationContext(), "port", editTextPort.getText().toString());
 				
-//				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
-//				task.execute();
+				TryToConnectTask task = new TryToConnectTask(getApplicationContext());
+				task.execute();
 				
 //				Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
 //				startActivity(intent);
 				
-				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
-				intent.putExtra("the8Digits", "00");
-				startActivity(intent);
-				finish();
+//				Intent intent = new Intent(getApplicationContext(), SwitchActivity.class);
+//				intent.putExtra("the8Digits", "00");
+//				startActivity(intent);
+//				finish();
 			}
 		});
 	}
