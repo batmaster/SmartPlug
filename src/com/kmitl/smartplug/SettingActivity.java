@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -105,8 +106,14 @@ public class SettingActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.equals("1"))
+			if (result.equals("1")) {
 				outerDialog.dismiss();
+				
+				Intent intent = new Intent(getApplicationContext(), BeforeConnectActivity.class);
+				startActivity(intent);
+				
+				SettingActivity.this.finish();
+			}
 		}
 	}
 

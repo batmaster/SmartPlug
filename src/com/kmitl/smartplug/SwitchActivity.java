@@ -93,7 +93,11 @@ public class SwitchActivity extends Activity {
 			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 			
 			if (the8Digits.charAt(0) != the8Digits.charAt(1))
-				SharedValues.showDialog(getApplicationContext(), "Appliance has problem!");
+				SharedValues.showDialog(SwitchActivity.this, "Appliance has problem!");
+			else if (the8Digits.charAt(0) == 1)
+				SharedValues.showDialog(SwitchActivity.this, "Appliance is using");
+			else
+				SharedValues.showDialog(SwitchActivity.this, "Appliance is not using");
 	}
 	
 	private boolean ready = true;
