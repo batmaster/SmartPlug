@@ -106,12 +106,13 @@ public class SettingActivity extends Activity {
 				dialog.dismiss();
             }
 			
-			if (result.equals("1")) {
+			if (result.equals(ssid + "-" + password)) {
 				outerDialog.dismiss();
 				
 				Intent intent = new Intent(getApplicationContext(), BeforeConnectActivity.class);
-				startActivity(intent);
+				SettingActivity.this.startActivity(intent);
 				
+				SwitchActivity.activity.finish();
 				SettingActivity.this.finish();
 			}
 		}

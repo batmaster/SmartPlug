@@ -29,14 +29,18 @@ public class SwitchActivity extends Activity {
 	private ImageView imageViewBulb;
 	private TextView textViewSetAlarm;
 	private TextView textViewSetWifi;
+	
+	public static SwitchActivity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_switch);
 		
+		activity = SwitchActivity.this;
+		
 		textView0 = (TextView) findViewById(R.id.textView0);
-		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " Alarm Setting");
+		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " ON/OFF");
 		
 		imageViewRefresh = (ImageView) findViewById(R.id.imageViewRefresh);
 		imageViewRefresh.setOnClickListener(new OnClickListener() {
@@ -84,17 +88,18 @@ public class SwitchActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		textViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.GONE : View.VISIBLE);
 		
 		refreshStatus(getIntent().getStringExtra("the8Digits"));
 	}
 	
 	private void refreshStatus(String the8Digits) {
-			imageViewSwitch.setImageResource(the8Digits.charAt(1) == '1' ? R.drawable.switch_off : R.drawable.switch_on);
+			imageViewSwitch.setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
 			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 			
 			if (the8Digits.charAt(0) != the8Digits.charAt(1))
 				SharedValues.showDialog(SwitchActivity.this, "Appliance has problem!");
-			else if (the8Digits.charAt(0) == 1)
+			else if (the8Digits.charAt(0) == 0)
 				SharedValues.showDialog(SwitchActivity.this, "Appliance is using");
 			else
 				SharedValues.showDialog(SwitchActivity.this, "Appliance is not using");
@@ -156,7 +161,6 @@ public class SwitchActivity extends Activity {
 				d.setCanceledOnTouchOutside(true);
 				d.show();
 			}
-			
 			ready = true;
 		}
 	}
@@ -202,9 +206,7 @@ public class SwitchActivity extends Activity {
             }
 			
 			if (result.length() == 2) {
-				imageViewSwitch.setImageResource(result.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
-				imageViewBulb.setImageResource(result.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
-				
+				refreshStatus(result);
 			}
 			else {
 				AlertDialog d;

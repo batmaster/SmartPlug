@@ -53,7 +53,7 @@ public class AlarmActivity extends FragmentActivity {
 		setContentView(R.layout.activity_alarm);
 		
 		textView0 = (TextView) findViewById(R.id.textView0);
-		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " ON/OFF");
+		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " Alarm Setting");
 
 		buttonAdd = (Button) findViewById(R.id.buttonAdd);
 		buttonAdd.setOnClickListener(new OnClickListener() {
