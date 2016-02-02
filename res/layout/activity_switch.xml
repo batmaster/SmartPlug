@@ -54,26 +54,25 @@
     
     <ImageView
         android:id="@+id/imageViewRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="640px"
+        android:layout_height="120px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80px"
         android:src="@drawable/refresh" />
-
-    <TextView
-        android:id="@+id/textViewSetAlarm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Time Setting"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewSetWifi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="WiFi Setting"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
+    
+    <ImageView
+        android:id="@+id/imageViewSetAlarm"
+        android:layout_width="640px"
+        android:layout_height="120px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80px"
+        android:src="@drawable/alarm" />
+    
+    <ImageView
+        android:id="@+id/imageViewSetWifi"
+        android:layout_width="640px"
+        android:layout_height="120px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80px"
+        android:src="@drawable/wifi" />
 </LinearLayout>

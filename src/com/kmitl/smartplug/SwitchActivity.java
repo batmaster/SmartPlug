@@ -24,11 +24,11 @@ import android.widget.Toast;
 public class SwitchActivity extends Activity {
 	
 	private TextView textView0;
-	private ImageView imageViewRefresh;
 	private ImageView imageViewSwitch;
 	private ImageView imageViewBulb;
-	private TextView textViewSetAlarm;
-	private TextView textViewSetWifi;
+	private ImageView imageViewRefresh;
+	private ImageView imageViewSetAlarm;
+	private ImageView imageViewSetWifi;
 	
 	public static SwitchActivity activity;
 
@@ -69,8 +69,8 @@ public class SwitchActivity extends Activity {
 		
 		imageViewBulb = (ImageView) findViewById(R.id.imageViewBulb);
 		
-		textViewSetAlarm = (TextView) findViewById(R.id.textViewSetAlarm);
-		textViewSetAlarm.setOnClickListener(new OnClickListener() {
+		imageViewSetAlarm = (ImageView) findViewById(R.id.imageViewSetAlarm);
+		imageViewSetAlarm.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -79,8 +79,8 @@ public class SwitchActivity extends Activity {
 			}
 		});
 		
-		textViewSetWifi = (TextView) findViewById(R.id.textViewSetWifi);
-		textViewSetWifi.setOnClickListener(new OnClickListener() {
+		imageViewSetWifi = (ImageView) findViewById(R.id.imageViewSetWifi);
+		imageViewSetWifi.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -88,7 +88,7 @@ public class SwitchActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		textViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.GONE : View.VISIBLE);
+		imageViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.GONE : View.VISIBLE);
 		
 		refreshStatus(getIntent().getStringExtra("the8Digits"));
 	}

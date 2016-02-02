@@ -26,13 +26,15 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int bulb_off=0x7f020000;
-        public static final int bulb_on=0x7f020001;
-        public static final int ic_luncher=0x7f020002;
-        public static final int refresh=0x7f020003;
-        public static final int selection_divider=0x7f020004;
-        public static final int switch_off=0x7f020005;
-        public static final int switch_on=0x7f020006;
+        public static final int alarm=0x7f020000;
+        public static final int bulb_off=0x7f020001;
+        public static final int bulb_on=0x7f020002;
+        public static final int ic_luncher=0x7f020003;
+        public static final int refresh=0x7f020004;
+        public static final int selection_divider=0x7f020005;
+        public static final int switch_off=0x7f020006;
+        public static final int switch_on=0x7f020007;
+        public static final int wifi=0x7f020008;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
@@ -59,6 +61,8 @@ public final class R {
         public static final int editTextSsid=0x7f090018;
         public static final int imageViewBulb=0x7f090010;
         public static final int imageViewRefresh=0x7f090012;
+        public static final int imageViewSetAlarm=0x7f090013;
+        public static final int imageViewSetWifi=0x7f090014;
         public static final int imageViewSwitch=0x7f090011;
         public static final int linearLayoutOutlet1=0x7f09000f;
         public static final int listViewDateTime=0x7f090003;
@@ -72,8 +76,6 @@ public final class R {
         public static final int textView1=0x7f090006;
         public static final int textView2=0x7f090008;
         public static final int textViewDate=0x7f090021;
-        public static final int textViewSetAlarm=0x7f090013;
-        public static final int textViewSetWifi=0x7f090014;
         public static final int textViewTime=0x7f090020;
         public static final int timePicker=0x7f09001f;
         public static final int viewPager=0x7f090024;
