@@ -45,7 +45,6 @@ public class AlarmActivity extends FragmentActivity {
 	private ListView listViewTime;
 	
 	private Date date;
-	private boolean switches;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,20 +136,12 @@ public class AlarmActivity extends FragmentActivity {
         			}
         		});
         		
-        		switch1.setOnClickListener(new OnClickListener() {
-
-        			@Override
-        			public void onClick(View v) {
-        				AlarmActivity.this.switches = !switches;
-        				switch1.setChecked(switches);
-        			}
-        		});
         		
         		buttonAdd.setOnClickListener(new OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
-						SharedValues.addDateTime(getApplicationContext(), switchEveryday.isChecked() ? SharedValues.KEY_EVERYDAY : SharedValues.KEY_ONETIME, new DateTimeItem(editTextDateTime.getText().toString(), switches));
+						SharedValues.addDateTime(getApplicationContext(), switchEveryday.isChecked() ? SharedValues.KEY_EVERYDAY : SharedValues.KEY_ONETIME, new DateTimeItem(editTextDateTime.getText().toString(), switch1.isChecked()));
 						if (switchEveryday.isChecked())
 							listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
 						else
