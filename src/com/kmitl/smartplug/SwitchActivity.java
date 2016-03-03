@@ -29,6 +29,7 @@ public class SwitchActivity extends Activity {
 	private ImageView imageViewRefresh;
 	private ImageView imageViewSetAlarm;
 	private ImageView imageViewSetWifi;
+	private ImageView imageViewSetName;
 	
 	public static SwitchActivity activity;
 
@@ -84,25 +85,38 @@ public class SwitchActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+				Intent intent = new Intent(getApplicationContext(), SettingWifiActivity.class);
 				startActivity(intent);
 			}
 		});
-		imageViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.GONE : View.VISIBLE);
+		imageViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.VISIBLE : View.GONE);
 		
-		refreshStatus(getIntent().getStringExtra("the8Digits"));
+		imageViewSetName = (ImageView) findViewById(R.id.imageViewSetName);
+		imageViewSetName.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SettingNameActivity.class);
+				startActivity(intent);
+			}
+		});
+		imageViewSetName.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.VISIBLE : View.GONE);
+		
+		refreshStatus(getIntent().getStringExtra("the8Digits"), false);
 	}
 	
-	private void refreshStatus(String the8Digits) {
+	private void refreshStatus(String the8Digits, boolean isShowDialog) {
 			imageViewSwitch.setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
 			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 			
-			if (the8Digits.charAt(0) != the8Digits.charAt(1))
-				SharedValues.showDialog(SwitchActivity.this, "Appliance has problem!");
-			else if (the8Digits.charAt(0) == 0)
-				SharedValues.showDialog(SwitchActivity.this, "Appliance is using");
-			else
-				SharedValues.showDialog(SwitchActivity.this, "Appliance is not using");
+			if (isShowDialog) {
+				if (the8Digits.charAt(0) != the8Digits.charAt(1))
+					SharedValues.showDialog(SwitchActivity.this, "Appliance has problem!");
+				else if (the8Digits.charAt(0) == 0)
+					SharedValues.showDialog(SwitchActivity.this, "Appliance is using");
+				else
+					SharedValues.showDialog(SwitchActivity.this, "Appliance is not use");
+			}
 	}
 	
 	private boolean ready = true;
@@ -145,15 +159,15 @@ public class SwitchActivity extends Activity {
             }
 			
 			if (result.length() == 2) {
-				refreshStatus(result);
+				refreshStatus(result, true);
 			}
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("ติดต่อบอร์ดไม่ได้");
+					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("ติดต่อบอร์ดไม่ได้");
+					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
@@ -206,15 +220,15 @@ public class SwitchActivity extends Activity {
             }
 			
 			if (result.length() == 2) {
-				refreshStatus(result);
+				refreshStatus(result, false);
 			}
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("ติดต่อบอร์ดไม่ได้");
+					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("ติดต่อบอร์ดไม่ได้");
+					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);

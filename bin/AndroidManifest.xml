@@ -30,7 +30,7 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".SettingActivity"
+            android:name=".SettingWifiActivity"
             android:label="@string/app_name" >
         </activity>
         

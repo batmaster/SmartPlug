@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.kmitl.smartplug.ConnectActivity" >
+    tools:context="com.kmitl.smartplug.ConnectActivity"
+    android:background="@drawable/gradient_background" >
 
     <TextView
         android:id="@+id/textView0"
@@ -39,14 +40,12 @@
             <requestFocus />
         </EditText>
 
-        <TextView
-            android:id="@+id/textView1"
+        <ImageView
+            android:id="@+id/imageView1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="\?"
-            android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:src="@drawable/help" />
 
     </LinearLayout>
 
@@ -69,14 +68,12 @@
             android:ems="10" >
         </EditText>
 
-        <TextView
-            android:id="@+id/textView2"
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="\?"
-            android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:src="@drawable/help" />
 
     </LinearLayout>
 

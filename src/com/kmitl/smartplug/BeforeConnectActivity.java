@@ -15,16 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class BeforeConnectActivity extends Activity {
 
-	private Button buttonDirectMode;
-	private TextView textView1;
+	private ImageView imageViewGlobalMode;
+	private ImageView imageView1;
 	
-	private Button buttonGlobalMode;
-	private TextView textView2;
+	private ImageView imageViewDirectMode;
+	private ImageView imageView2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,29 +34,8 @@ public class BeforeConnectActivity extends Activity {
 		
 		startService(new Intent(getApplicationContext(), SwitchService.class));
 		
-		buttonDirectMode = (Button) findViewById(R.id.buttonDirectMode);
-		buttonDirectMode.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				SharedValues.setModePref(getApplicationContext(), "direct");
-				Intent intent = new Intent(getApplicationContext(), ConnectActivity.class);
-				startActivity(intent);
-				finish();
-			}
-		});
-		
-		textView1 = (TextView) findViewById(R.id.textView1);
-		textView1.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				SharedValues.showDialog(BeforeConnectActivity.this, "Can be remote control");
-			}
-		});
-		
-		buttonGlobalMode = (Button) findViewById(R.id.buttonGlobalMode);
-		buttonGlobalMode.setOnClickListener(new OnClickListener() {
+		imageViewGlobalMode = (ImageView) findViewById(R.id.imageViewGlobalmode);
+		imageViewGlobalMode.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -66,12 +46,33 @@ public class BeforeConnectActivity extends Activity {
 			}
 		});
 		
-		textView2 = (TextView) findViewById(R.id.textView2);
-		textView2.setOnClickListener(new OnClickListener() {
+		imageView1 = (ImageView) findViewById(R.id.imageView1);
+		imageView1.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				SharedValues.showDialog(BeforeConnectActivity.this, "Can be control via Internet");
+			}
+		});
+		
+		imageViewDirectMode = (ImageView) findViewById(R.id.imageViewDirectMode);
+		imageViewDirectMode.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				SharedValues.setModePref(getApplicationContext(), "direct");
+				Intent intent = new Intent(getApplicationContext(), ConnectActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		});
+		
+		imageView2 = (ImageView) findViewById(R.id.imageView2);
+		imageView2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				SharedValues.showDialog(BeforeConnectActivity.this, "Can be remote control");
 			}
 		});
 	}

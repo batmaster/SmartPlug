@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +31,9 @@ public class ConnectActivity extends Activity {
 	
 	private TextView textView0;
 	private EditText editTextIp;
-	private TextView textView1;
+	private ImageView imageView1;
 	private EditText editTextPort;
-	private TextView textView2;
+	private ImageView imageView2;
 	private Button buttonClear;
 	private Button buttonConnect;
 	
@@ -48,8 +49,8 @@ public class ConnectActivity extends Activity {
 		editTextIp = (EditText) findViewById(R.id.editTextIp);
 		editTextIp.setText(Service.getPreference(getApplicationContext(), "ip"));
 		
-		textView1 = (TextView) findViewById(R.id.textView1);
-		textView1.setOnClickListener(new OnClickListener() {
+		imageView1 = (ImageView) findViewById(R.id.imageView1);
+		imageView1.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -60,8 +61,8 @@ public class ConnectActivity extends Activity {
 		editTextPort = (EditText) findViewById(R.id.editTextPort);
 		editTextPort.setText(Service.getPreference(getApplicationContext(), "port"));
 		
-		textView2 = (TextView) findViewById(R.id.textView2);
-		textView2.setOnClickListener(new OnClickListener() {
+		imageView2 = (ImageView) findViewById(R.id.imageView2);
+		imageView2.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

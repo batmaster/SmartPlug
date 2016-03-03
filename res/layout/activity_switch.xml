@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.kmitl.smartplug.SwitchActivity" >
+    tools:context="com.kmitl.smartplug.SwitchActivity"
+    android:background="@drawable/gradient_background" >
 
     <TextView
         android:id="@+id/textView0"
@@ -33,8 +34,8 @@
 
         <ImageView
             android:id="@+id/imageViewBulb"
-            android:layout_width="180px"
-            android:layout_height="180px"
+            android:layout_width="150px"
+            android:layout_height="150px"
             android:layout_gravity="right"
             android:src="@drawable/bulb_off" />
 
@@ -44,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/imageViewSwitch"
-                android:layout_width="400px"
-                android:layout_height="400px"
+                android:layout_width="250px"
+                android:layout_height="250px"
                 android:layout_weight="1"
                 android:src="@drawable/switch_off" />
 
@@ -70,6 +71,14 @@
     
     <ImageView
         android:id="@+id/imageViewSetWifi"
+        android:layout_width="640px"
+        android:layout_height="120px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80px"
+        android:src="@drawable/wifi" />
+    
+    <ImageView
+        android:id="@+id/imageViewSetName"
         android:layout_width="640px"
         android:layout_height="120px"
         android:layout_gravity="center_horizontal"

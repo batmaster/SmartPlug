@@ -8,21 +8,32 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.kmitl.smartplug.SettingActivity" >
+    tools:context="com.kmitl.smartplug.SettingWifiActivity"
+    android:background="@drawable/gradient_background" >
     
     <TextView
         android:id="@+id/textView0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Smart Plug Connect"
+        android:text="Set Smart Plug Name"
         android:layout_marginBottom="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter name"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
     <Button
-        android:id="@+id/buttonSetWifi"
+        android:id="@+id/buttonSetName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Set Wifi" />
+        android:text="Confirm" />
 
 </LinearLayout>

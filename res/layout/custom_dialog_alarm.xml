@@ -38,6 +38,7 @@
     </LinearLayout>
 
     <Switch
+        android:visibility="gone"
         android:id="@+id/switchEveryday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
