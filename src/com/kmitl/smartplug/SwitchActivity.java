@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,8 +89,8 @@ public class SwitchActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-				startActivity(intent);
+				AskWifiSSID task = new AskWifiSSID(getApplicationContext());
+				task.execute();
 			}
 		});
 		imageViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.VISIBLE : View.GONE);
@@ -226,5 +231,142 @@ public class SwitchActivity extends Activity {
 			}
 			ready = true;
 		}
+	}
+	
+	private class AskWifiSSID extends AsyncTask<Void, Void, String> {
+		
+		private Context context;
+		private String ssid;
+		private String password;
+		private Dialog outerDialog;
+		
+		private ProgressDialog dialog;
+		
+		public AskWifiSSID(Context context) {
+			this.context = context;
+			
+			dialog = new ProgressDialog(SwitchActivity.this);
+			dialog.setCancelable(true);
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			dialog.setMessage("Trying to connect...");
+			
+			if (!dialog.isShowing()) {
+				dialog.show();
+            }
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			return Service.sendHttpRequest(context, "7", Service.SOCKET_TIMEOUT_TRYING);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+            }
+			String[] ssids = result.split(",");
+			
+			final Dialog dialog = new Dialog(SwitchActivity.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.custom_dialog_setting);
+            dialog.setCancelable(true);
+            
+            final Spinner spinnerSsid = (Spinner) dialog.findViewById(R.id.spinnerSsid);
+            
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, ssids);
+            spinnerSsid.setAdapter(adapter);
+            
+            final EditText editTextPassword = (EditText) dialog.findViewById(R.id.editTextPassword);
+            
+            Button buttonCancel = (Button)dialog.findViewById(R.id.buttonCancel);
+            buttonCancel.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                	
+                    dialog.cancel();
+                    
+                }
+            });
+            
+            Button buttonSet = (Button)dialog.findViewById(R.id.buttonSet);
+            buttonSet.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                	
+                	SetWifiTask task = new SetWifiTask(getApplicationContext(), spinnerSsid.getSelectedItem().toString(), editTextPassword.getText().toString(), dialog);
+                	task.execute();
+                	
+                }
+            });
+
+            dialog.show();
+		}
+	}
+	
+	private class SetWifiTask extends AsyncTask<Void, Void, String> {
+		
+		private Context context;
+		private String ssid;
+		private String password;
+		private Dialog outerDialog;
+		
+		private ProgressDialog dialog;
+		
+		public SetWifiTask(Context context, String ssid, String password, Dialog outerDialog) {
+			this.context = context;
+			this.ssid = ssid;
+			this.password = password;
+			this.outerDialog = outerDialog;
+			
+			dialog = new ProgressDialog(SwitchActivity.this);
+			dialog.setCancelable(true);
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			dialog.setMessage("Trying to connect...");
+			
+			if (!dialog.isShowing()) {
+				dialog.show();
+            }
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			return Service.sendHttpRequest(context, "8&" + ssid + "&" + password + "&", Service.SOCKET_TIMEOUT_TRYING);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+            }
+			
+			if (result.equals(ssid + "-" + password)) {
+				outerDialog.dismiss();
+				
+				Intent intent = new Intent(getApplicationContext(), ConnectActivity.class);
+				SwitchActivity.this.startActivity(intent);
+				
+				SwitchActivity.activity.finish();
+				SwitchActivity.this.finish();
+			}
+		}
+	}
+	
+	private boolean onBoot = true;
+	@Override
+	protected void onResume() {
+		if (!onBoot) {
+			CheckStateTask task = new CheckStateTask(getApplicationContext(), false);
+	    	task.execute();
+		}
+		else {
+			onBoot = false;
+		}
+		
+		super.onResume();
 	}
 }

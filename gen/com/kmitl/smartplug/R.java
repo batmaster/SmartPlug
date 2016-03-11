@@ -67,7 +67,6 @@ public final class R {
         public static final int editTextIp=0x7f09000d;
         public static final int editTextPassword=0x7f09001c;
         public static final int editTextPort=0x7f09000e;
-        public static final int editTextSsid=0x7f09001b;
         public static final int imageView1=0x7f090008;
         public static final int imageView2=0x7f09000b;
         public static final int imageViewBulb=0x7f090013;
@@ -82,6 +81,7 @@ public final class R {
         public static final int listViewTime=0x7f090004;
         public static final int okButton=0x7f09002b;
         public static final int slidingTabLayout=0x7f090026;
+        public static final int spinnerSsid=0x7f09001b;
         public static final int switch1=0x7f09001a;
         public static final int switchEveryday=0x7f090019;
         public static final int tabText=0x7f090020;
