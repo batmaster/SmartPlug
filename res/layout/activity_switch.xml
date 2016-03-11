@@ -80,7 +80,7 @@
     </LinearLayout>
     
     <ImageView
-        android:id="@+id/imageViewRefresh"
+        android:id="@+id/imageViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="0px"
         android:layout_weight="1"
@@ -88,7 +88,6 @@
         android:layout_marginTop="0px"
         android:padding="4px"
         android:adjustViewBounds="true"
-        android:visibility="gone"
         android:src="@drawable/refresh" />
     
     <ImageView

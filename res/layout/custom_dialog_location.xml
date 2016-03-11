@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Set Wifi"
+        android:text="Set Location"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
@@ -21,15 +21,22 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="SSID:" />
+            android:text="Enable" />
 
-        <Spinner
-            android:id="@+id/spinnerSsid"
-            android:layout_width="0px"
+        <Switch
+            android:id="@+id/switchEnable"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="9" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSetCenter"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Center" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,16 +47,25 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Password:" />
+            android:text="Off Range" />
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextRange"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:ems="10"
-            android:hint="" />
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonCheck"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,7 +82,7 @@
             android:id="@+id/buttonSet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Set" />
+            android:text="Submit" />
     </LinearLayout>
 
 </LinearLayout>

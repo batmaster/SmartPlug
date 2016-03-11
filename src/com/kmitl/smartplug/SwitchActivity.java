@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ public class SwitchActivity extends Activity {
 	private TextView textView0;
 	private ImageView imageViewSwitch;
 	private ImageView imageViewBulb;
-	private ImageView imageViewRefresh;
+	private ImageView imageViewLocation;
 	private ImageView imageViewSetAlarm;
 	private ImageView imageViewSetWifi;
 	
@@ -47,13 +48,12 @@ public class SwitchActivity extends Activity {
 		textView0 = (TextView) findViewById(R.id.textView0);
 		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " ON/OFF");
 		
-		imageViewRefresh = (ImageView) findViewById(R.id.imageViewRefresh);
-		imageViewRefresh.setOnClickListener(new OnClickListener() {
+		imageViewLocation = (ImageView) findViewById(R.id.imageViewLocation);
+		imageViewLocation.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
-            	task.execute();
+				
 			}
 		});
 		
@@ -272,15 +272,32 @@ public class SwitchActivity extends Activity {
 			
 			final Dialog dialog = new Dialog(SwitchActivity.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.custom_dialog_setting);
+            dialog.setContentView(R.layout.custom_dialog_location);
             dialog.setCancelable(true);
             
-            final Spinner spinnerSsid = (Spinner) dialog.findViewById(R.id.spinnerSsid);
+            final Switch switchEnable = (Switch) findViewById(R.id.switchEnable);
             
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, ssids);
-            spinnerSsid.setAdapter(adapter);
+            Button buttonSetCenter = (Button) findViewById(R.id.buttonSetCenter);
+            buttonSetCenter.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
             
-            final EditText editTextPassword = (EditText) dialog.findViewById(R.id.editTextPassword);
+            final EditText editTextRange = (EditText) findViewById(R.id.editTextRange);
+            
+            Button buttonCheck = (Button) findViewById(R.id.buttonCheck);
+            buttonCheck.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
             
             Button buttonCancel = (Button)dialog.findViewById(R.id.buttonCancel);
             buttonCancel.setOnClickListener(new OnClickListener() {
@@ -294,9 +311,6 @@ public class SwitchActivity extends Activity {
             Button buttonSet = (Button)dialog.findViewById(R.id.buttonSet);
             buttonSet.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                	
-                	SetWifiTask task = new SetWifiTask(getApplicationContext(), spinnerSsid.getSelectedItem().toString(), editTextPassword.getText().toString(), dialog);
-                	task.execute();
                 	
                 }
             });
