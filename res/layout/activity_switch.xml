@@ -25,7 +25,7 @@
         android:id="@+id/linearLayoutOutlet1"
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="5"
+        android:layout_weight="4.5"
         android:weightSum="10"
         android:layout_marginBottom="50px"
         android:orientation="vertical" >
@@ -111,4 +111,18 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="0px"
         android:src="@drawable/wifi" />
+    
+    <ImageView
+        android:id="@+id/imageViewCheckUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:padding="4px"
+        android:layout_weight="0.5"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0px"
+        android:src="@drawable/wifi" />
+
+   
+
 </LinearLayout>

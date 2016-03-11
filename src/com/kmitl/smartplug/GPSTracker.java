@@ -1,4 +1,4 @@
-package com.tot.totwatchman;
+package com.kmitl.smartplug;
 
 import android.app.AlertDialog;
 import android.app.Service;
