@@ -29,7 +29,6 @@ public class SwitchActivity extends Activity {
 	private ImageView imageViewRefresh;
 	private ImageView imageViewSetAlarm;
 	private ImageView imageViewSetWifi;
-	private ImageView imageViewSetName;
 	
 	public static SwitchActivity activity;
 
@@ -85,22 +84,11 @@ public class SwitchActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SettingWifiActivity.class);
+				Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
 				startActivity(intent);
 			}
 		});
 		imageViewSetWifi.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.VISIBLE : View.GONE);
-		
-		imageViewSetName = (ImageView) findViewById(R.id.imageViewSetName);
-		imageViewSetName.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SettingNameActivity.class);
-				startActivity(intent);
-			}
-		});
-		imageViewSetName.setVisibility(SharedValues.getModePref(getApplicationContext()).equals("global") ? View.VISIBLE : View.GONE);
 		
 		refreshStatus(getIntent().getStringExtra("the8Digits"), false);
 	}
@@ -112,7 +100,7 @@ public class SwitchActivity extends Activity {
 			if (isShowDialog) {
 				if (the8Digits.charAt(0) != the8Digits.charAt(1))
 					SharedValues.showDialog(SwitchActivity.this, "Appliance has problem!");
-				else if (the8Digits.charAt(0) == 0)
+				else if (the8Digits.charAt(0) == '1')
 					SharedValues.showDialog(SwitchActivity.this, "Appliance is using");
 				else
 					SharedValues.showDialog(SwitchActivity.this, "Appliance is not use");

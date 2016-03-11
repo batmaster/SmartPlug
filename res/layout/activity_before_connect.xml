@@ -39,11 +39,12 @@
     <ImageView
         android:id="@+id/ImageView1"
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:src="@drawable/header" />
+        android:layout_centerInParent="false"
+        android:layout_marginTop="40px"
+        android:adjustViewBounds="true"
+        android:src="@drawable/lippo" />
 
     <TextView
         android:id="@+id/TextView1"

@@ -64,7 +64,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="11"
-            android:hint="90"
+            android:hint="5501"
             android:ems="10" >
         </EditText>
 

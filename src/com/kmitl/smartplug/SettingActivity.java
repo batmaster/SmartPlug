@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SettingWifiActivity extends Activity {
+public class SettingActivity extends Activity {
 	
 	private TextView textView0;
 	private Button buttonSetWifi;
@@ -25,7 +25,7 @@ public class SettingWifiActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setting_wifi);
+		setContentView(R.layout.activity_setting);
 		
 		textView0 = (TextView) findViewById(R.id.textView0);
 		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " WiFi Setting");
@@ -35,7 +35,7 @@ public class SettingWifiActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				final Dialog dialog = new Dialog(SettingWifiActivity.this);
+				final Dialog dialog = new Dialog(SettingActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.custom_dialog_setting);
                 dialog.setCancelable(true);
@@ -82,7 +82,7 @@ public class SettingWifiActivity extends Activity {
 			this.password = password;
 			this.outerDialog = outerDialog;
 			
-			dialog = new ProgressDialog(SettingWifiActivity.this);
+			dialog = new ProgressDialog(SettingActivity.this);
 			dialog.setCancelable(true);
 		}
 		
@@ -110,10 +110,10 @@ public class SettingWifiActivity extends Activity {
 				outerDialog.dismiss();
 				
 				Intent intent = new Intent(getApplicationContext(), BeforeConnectActivity.class);
-				SettingWifiActivity.this.startActivity(intent);
+				SettingActivity.this.startActivity(intent);
 				
 				SwitchActivity.activity.finish();
-				SettingWifiActivity.this.finish();
+				SettingActivity.this.finish();
 			}
 		}
 	}

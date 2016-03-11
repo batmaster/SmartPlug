@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -14,74 +15,100 @@
     <TextView
         android:id="@+id/textView0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="Smart Plug Connect"
+        android:text="Real Smart Plug Connect"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
         android:id="@+id/linearLayoutOutlet1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="5"
+        android:weightSum="10"
         android:layout_marginBottom="50px"
         android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="" />
-
-        <ImageView
-            android:id="@+id/imageViewBulb"
-            android:layout_width="150px"
-            android:layout_height="150px"
-            android:layout_gravity="right"
-            android:src="@drawable/bulb_off" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="0px"
+            android:layout_weight="3"
+            android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/imageViewSwitch"
-                android:layout_width="250px"
-                android:layout_height="250px"
-                android:layout_weight="1"
-                android:src="@drawable/switch_off" />
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageViewBulb"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="4"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/bulb_off" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="status" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+                android:id="@+id/imageViewSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="0px"
+                android:layout_weight="7"
+                android:layout_gravity="center"
+                android:adjustViewBounds="false"
+                android:src="@drawable/switch_off" />
+
     </LinearLayout>
     
     <ImageView
         android:id="@+id/imageViewRefresh"
-        android:layout_width="640px"
-        android:layout_height="120px"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80px"
+        android:layout_marginTop="0px"
+        android:padding="4px"
+        android:adjustViewBounds="true"
         android:src="@drawable/refresh" />
     
     <ImageView
         android:id="@+id/imageViewSetAlarm"
-        android:layout_width="640px"
-        android:layout_height="120px"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:padding="4px"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80px"
+        android:layout_marginTop="0px"
+        android:adjustViewBounds="true"
         android:src="@drawable/alarm" />
     
     <ImageView
         android:id="@+id/imageViewSetWifi"
-        android:layout_width="640px"
-        android:layout_height="120px"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:padding="4px"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80px"
-        android:src="@drawable/wifi" />
-    
-    <ImageView
-        android:id="@+id/imageViewSetName"
-        android:layout_width="640px"
-        android:layout_height="120px"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80px"
+        android:layout_marginTop="0px"
         android:src="@drawable/wifi" />
 </LinearLayout>

@@ -25,13 +25,13 @@ public class Receiver extends BroadcastReceiver {
 			Date now = new Date();
 			
 			String dt = SharedValues.sdf.format(now);
-			String t = SharedValues.sdf_everyday.format(now);
+			//String t = SharedValues.sdf_everyday.format(now);
 			
 			DateTimeItem dti = new DateTimeItem(dt, false);
-			DateTimeItem ti = new DateTimeItem(t, false);
+			//DateTimeItem ti = new DateTimeItem(t, false);
 			
 			ArrayList<DateTimeItem> dtl = SharedValues.getDateTimeList(context, SharedValues.KEY_ONETIME);
-			ArrayList<DateTimeItem> tl = SharedValues.getDateTimeList(context, SharedValues.KEY_EVERYDAY);
+			//ArrayList<DateTimeItem> tl = SharedValues.getDateTimeList(context, SharedValues.KEY_EVERYDAY);
 			
 			for (int i = 0; i < dtl.size(); i++) {
 				if (dtl.get(i).getDateTime().compareTo(dti.getDateTime()) < 0) {
@@ -45,13 +45,13 @@ public class Receiver extends BroadcastReceiver {
 				}
 			}
 			
-			for (int i = 0; i < tl.size(); i++) {
+			/*for (int i = 0; i < tl.size(); i++) {
 				if (tl.get(i).getDateTime().equals(ti.getDateTime())) {
 					SwitchTaskForService task = new SwitchTaskForService(context, tl.get(i).getState());
 					task.execute();
 					break;
 				}
-			}
+			}*/
 		}
 	}
 

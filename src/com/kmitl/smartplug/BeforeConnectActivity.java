@@ -51,7 +51,7 @@ public class BeforeConnectActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				SharedValues.showDialog(BeforeConnectActivity.this, "Can be control via Internet");
+				SharedValues.showDialog(BeforeConnectActivity.this, "Control via Internet");
 			}
 		});
 		
@@ -72,7 +72,7 @@ public class BeforeConnectActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				SharedValues.showDialog(BeforeConnectActivity.this, "Can be remote control");
+				SharedValues.showDialog(BeforeConnectActivity.this, "Using as common remote control");
 			}
 		});
 	}
