@@ -8,10 +8,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,6 +25,8 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -30,6 +35,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SwitchActivity extends Activity {
+	
+	private static final int REQUEST_LOCATION_SETTING_FORCE_CLOSE = 12889;
+    private static final int REQUEST_MOCK_SETTING_FORCE_CLOSE = 12890;
+    private static final int REQUEST_LOCATION_SETTING = 12891;
+    private static final int REQUEST_MOCK_SETTING = 12892;
 	
 	private TextView textView0;
 	private ImageView imageViewSwitch;
@@ -40,11 +50,14 @@ public class SwitchActivity extends Activity {
 	private ImageView imageViewCheckUnit;
 	
 	public static SwitchActivity activity;
+	private GPSTracker gpsTracker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_switch);
+		
+		gpsTracker = new GPSTracker(getApplicationContext());
 		
 		activity = SwitchActivity.this;
 		
@@ -312,14 +325,20 @@ public class SwitchActivity extends Activity {
             dialog.setCancelable(true);
             
             final Switch switchEnable = (Switch) findViewById(R.id.switchEnable);
+            switchEnable.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+					SharedValues.setEnableLocation(getApplicationContext(), arg1);
+				}
+			});
             
             Button buttonSetCenter = (Button) findViewById(R.id.buttonSetCenter);
             buttonSetCenter.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					checkGPS(false);
 				}
 			});
             
@@ -330,8 +349,16 @@ public class SwitchActivity extends Activity {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					double lat = SharedValues.getLat(getApplicationContext());
+					double lng = SharedValues.getLng(getApplicationContext());
+					if (lat != 0 && lng != 0) {
+						Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + lat + "," + lng));
+						intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+						startActivity(intent);
+					}
+					else {
+						Toast.makeText(getApplicationContext(), "ยังไม่ได้ตั้งค่า", Toast.LENGTH_SHORT).show();
+					}
 				}
 			});
             
@@ -419,6 +446,65 @@ public class SwitchActivity extends Activity {
 		}
 		
 		super.onResume();
+	}
+	
+	private void checkGPS(final boolean forceClose) {
+		if (!gpsTracker.canGetLocation()) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+			dialog.setTitle("ระบบหาตำแหน่งถูกปิด");
+			dialog.setMessage("เปิดการใช้งาน \"ตำแหน่ง\" หรือ \"Location\" เพื่อทำการเช็คอิน");
+			dialog.setPositiveButton("ตั้งค่า", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					activity.startActivityForResult(intent, forceClose ? REQUEST_LOCATION_SETTING_FORCE_CLOSE : REQUEST_LOCATION_SETTING);
+					dialog.dismiss();
+				}
+			});
+			dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			dialog.setIcon(android.R.drawable.ic_menu_manage);
+			dialog.show();
+		}
+		else {
+			checkMock(forceClose);
+		}
+	}
+	
+	private void checkMock(final boolean forceClose) {
+		if (isMockSettingsON()) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(SwitchActivity.this);
+			dialog.setTitle("ตรวจพบการเปิดระบบตำแหน่งจำลอง");
+			dialog.setMessage("ปิด \"อนุญาตตำแหน่งจำลอง\" หรือ \"Allow mock locations\" เพื่อทำการเช็คอิน");
+			dialog.setPositiveButton("ตั้งค่า", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		        	Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+		        	SwitchActivity.this.startActivityForResult(intent, forceClose ? REQUEST_MOCK_SETTING_FORCE_CLOSE : REQUEST_MOCK_SETTING);
+					dialog.dismiss();
+		        }
+		     });
+			dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) {
+		        	dialog.dismiss();
+		        }
+			});
+			dialog.setIcon(android.R.drawable.ic_menu_manage);
+			dialog.show();
+		}
+		else {
+			SharedValues.setLat(getApplicationContext(), gpsTracker.getLatitude());
+			SharedValues.setLng(getApplicationContext(), gpsTracker.getLongitude());
+		}
+	}
+	
+	private boolean isMockSettingsON() {
+		return !Settings.Secure.getString(activity.getApplicationContext().getContentResolver(), Settings.Secure.ALLOW_MOCK_LOCATION).equals("0");
 	}
 	
 }

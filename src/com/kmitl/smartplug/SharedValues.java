@@ -104,4 +104,56 @@ public class SharedValues {
             }
         }).create().show();
 	}
+	
+	
+	
+	//// location
+	
+	public static void setLat(Context context, double lat) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString("lat", String.valueOf(lat));
+		editor.commit();
+	}
+	
+	public static double getLat(Context context) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		return Double.parseDouble(sp.getString("lat", "0"));
+	}
+	
+	public static void setLng(Context context, double lng) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString("lng", String.valueOf(lng));
+		editor.commit();
+	}
+	
+	public static double getLng(Context context) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		return Double.parseDouble(sp.getString("lng", "0"));
+	}
+	
+	public static void setEnableLocation(Context context, boolean enable) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putBoolean("enable", enable);
+		editor.commit();
+	}
+	
+	public static boolean getEnableLocation(Context context) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		return sp.getBoolean("enable", false);
+	}
+	
+	public static void setOffRange(Context context, double range) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString("range", String.valueOf(range));
+		editor.commit();
+	}
+	
+	public static double getOffRange(Context context) {
+		SharedPreferences sp = context.getSharedPreferences("kmitl", Context.MODE_PRIVATE);
+		return Double.parseDouble(sp.getString("range", "0"));
+	}
 }
