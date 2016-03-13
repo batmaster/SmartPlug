@@ -103,8 +103,31 @@ public class SwitchActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				GetI task = new GetI(getApplicationContext());
-				task.execute();
+				double I = new LogIDBHelper(getApplicationContext()).getAllI();
+				
+				final Dialog dialog = new Dialog(SwitchActivity.this);
+	            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	            dialog.setContentView(R.layout.custom_dialog_unit);
+	            dialog.setCancelable(true);
+	            
+	            final double unit = I * 0.00383333;
+
+	            TextView textViewUnit = (TextView) dialog.findViewById(R.id.textViewUnit);
+	            textViewUnit.setText(String.valueOf(unit));
+	            final EditText editTextU = (EditText) dialog.findViewById(R.id.editTextU);
+	            final TextView textViewBaht = (TextView) dialog.findViewById(R.id.textViewBaht);
+	            
+	            editTextU.setOnKeyListener(new OnKeyListener() {
+					
+					@Override
+					public boolean onKey(View v, int keyCode, KeyEvent event) {
+						double baht = unit * Double.parseDouble(editTextU.getText().toString());
+						textViewBaht.setText(String.format("%.2f ฿", baht));
+						return false;
+					}
+				});
+	            
+	            dialog.show();
 			}
 		});
 		
@@ -384,6 +407,7 @@ public class SwitchActivity extends Activity {
 	}
 	
 	private boolean onBoot = true;
+	
 	@Override
 	protected void onResume() {
 		if (!onBoot) {
@@ -395,70 +419,6 @@ public class SwitchActivity extends Activity {
 		}
 		
 		super.onResume();
-	}
-	
-private class GetI extends AsyncTask<Void, Void, String> {
-		
-		private Context context;
-		private String ssid;
-		private String password;
-		private Dialog outerDialog;
-		
-		private ProgressDialog dialog;
-		
-		public GetI(Context context) {
-			this.context = context;
-			
-			dialog = new ProgressDialog(SwitchActivity.this);
-			dialog.setCancelable(true);
-		}
-		
-		@Override
-		protected void onPreExecute() {
-			dialog.setMessage("Trying to connect...");
-			
-			if (!dialog.isShowing()) {
-				dialog.show();
-            }
-		}
-
-		@Override
-		protected String doInBackground(Void... params) {
-			return Service.sendHttpRequest(context, "6", Service.SOCKET_TIMEOUT_TRYING);
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if (dialog.isShowing()) {
-				dialog.dismiss();
-            }
-			
-			double I = Double.parseDouble(result);
-			
-			final Dialog dialog = new Dialog(SwitchActivity.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.custom_dialog_unit);
-            dialog.setCancelable(true);
-            
-            final double unit = I * 0.00383333;
-
-            TextView textViewUnit = (TextView) dialog.findViewById(R.id.textViewUnit);
-            textViewUnit.setText(String.valueOf(unit));
-            final EditText editTextU = (EditText) dialog.findViewById(R.id.editTextU);
-            final TextView textViewBaht = (TextView) dialog.findViewById(R.id.textViewBaht);
-            
-            editTextU.setOnKeyListener(new OnKeyListener() {
-				
-				@Override
-				public boolean onKey(View v, int keyCode, KeyEvent event) {
-					double baht = unit * Double.parseDouble(editTextU.getText().toString());
-					textViewBaht.setText(String.format("%.2f ฿", baht));
-					return false;
-				}
-			});
-            
-            dialog.show();
-		}
 	}
 	
 }
