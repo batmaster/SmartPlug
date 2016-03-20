@@ -7,9 +7,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,11 +53,23 @@ public class SwitchActivity extends Activity {
 	
 	public static SwitchActivity activity;
 	private GPSTracker gpsTracker;
+	
+	private BroadcastReceiver refreshSwitch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_switch);
+		
+		refreshSwitch = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				CheckStateTask task = new CheckStateTask(getApplicationContext(), false);
+		    	task.execute();
+			}
+		};
+		
+		registerReceiver(refreshSwitch, new IntentFilter("com.kmitl.smartplug.refreshSwitch"));
 		
 		gpsTracker = new GPSTracker(getApplicationContext());
 		
@@ -209,6 +223,15 @@ public class SwitchActivity extends Activity {
 		refreshStatus(getIntent().getStringExtra("the8Digits"), false);
 	}
 	
+	
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(refreshSwitch);
+		super.onDestroy();
+	}
+
+
+
 	private void refreshStatus(String the8Digits, boolean isShowDialog) {
 			imageViewSwitch.setImageResource(the8Digits.charAt(1) == '0' ? R.drawable.switch_off : R.drawable.switch_on);
 			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);

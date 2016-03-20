@@ -10,6 +10,7 @@ import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -47,11 +48,22 @@ public class AlarmActivity extends FragmentActivity {
 	//private ListView listViewTime;
 	
 	private Date date;
+	
+	private BroadcastReceiver refreshAlarm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm);
+		
+		refreshAlarm = new BroadcastReceiver(){
+			@Override
+		    public void onReceive(Context context, Intent intent) {
+		    	listViewDateTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_ONETIME)));
+		    }
+		};
+		
+		registerReceiver(refreshAlarm, new IntentFilter("com.kmitl.smartplug.refreshUnit"));
 		
 		textView0 = (TextView) findViewById(R.id.textView0);
 		textView0.setText((SharedValues.getModePref(getApplicationContext()).equals("direct") ? "Direct Mode" : "Global Mode") + " Alarm Setting");
@@ -170,6 +182,12 @@ public class AlarmActivity extends FragmentActivity {
 		
 		//listViewTime = (ListView) findViewById(R.id.listViewTime);
 		//listViewTime.setAdapter(new ListViewRowAdapter(getApplicationContext(), SharedValues.getDateTimeList(getApplicationContext(), SharedValues.KEY_EVERYDAY)));
+	}
+
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(refreshAlarm);
+		super.onDestroy();
 	}
 
 	private class ListViewRowAdapter extends BaseAdapter {

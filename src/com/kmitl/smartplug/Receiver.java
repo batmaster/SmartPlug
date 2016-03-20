@@ -30,6 +30,9 @@ public class Receiver extends BroadcastReceiver {
 			checkI(context);
 			
 			checkGPS(context, false);
+			
+            context.sendBroadcast(new Intent("com.kmitl.smartplug.refreshSwitch"));
+            context.sendBroadcast(new Intent("com.kmitl.smartplug.refreshAlarm"));
 		}
 	}
 	
