@@ -50,12 +50,14 @@ public class Receiver extends BroadcastReceiver {
 				SharedValues.removeDateTime(context, SharedValues.KEY_ONETIME, dtl.get(i));
 			}
 			if (dtl.get(i).getDateTime().equals(dti.getDateTime())) {
+				SharedValues.setEnableLocation(context, false);
 				SwitchTaskForService task = new SwitchTaskForService(context, dtl.get(i).getState());
 				SharedValues.removeDateTime(context, SharedValues.KEY_ONETIME, dtl.get(i));
 				task.execute();
 				break;
 			}
 		}
+		//0.0018783317
 		
 		/*for (int i = 0; i < tl.size(); i++) {
 			if (tl.get(i).getDateTime().equals(ti.getDateTime())) {
@@ -118,14 +120,20 @@ public class Receiver extends BroadcastReceiver {
 
 		@Override
 		protected void onPostExecute(String result) {
-			double I = Double.parseDouble(result);
-			
-			LogIDBHelper db = new LogIDBHelper(context);
-			db.addLogI(I);
+			try {
+				Log.d("LogI", "I: " + result);
+				double I = Double.parseDouble(result);
+				
+				LogIDBHelper db = new LogIDBHelper(context);
+				db.addLogI(I);
+			}
+			catch (Exception e) {
+				
+			}
 		}
 	}
 	
-	public final static double AVERAGE_RADIUS_OF_EARTH = 6371;
+	public final static double AVERAGE_RADIUS_OF_EARTH = 6371000;
 	public int calculateDistance(double userLat, double userLng,
 	  double venueLat, double venueLng) {
 
@@ -149,10 +157,14 @@ public class Receiver extends BroadcastReceiver {
 			double lat = SharedValues.getLat(context);
 			double lng = SharedValues.getLng(context);
 			
+			Log.d("locationn", "setting is: " + enable + " offRange: " + offRange + " lat: " + lat + " lng: " + lng);
 			if (enable && offRange != 0 && lat != 0 && lng != 0) {
 				double distance = calculateDistance(lat, lng, gpsTracker.getLatitude(), gpsTracker.getLongitude());
+				Log.d("locationn", "getting lat: " + gpsTracker.getLatitude() + " lng: " + gpsTracker.getLongitude());
+				Log.d("locationn", "getting distance: " + distance);
 				
 				if (distance >= offRange) {
+					Log.d("locationn", "distance >= offRange");
 					SwitchCloseTask task = new SwitchCloseTask(context);
 					task.execute();
 				}

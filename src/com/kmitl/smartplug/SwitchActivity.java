@@ -69,7 +69,64 @@ public class SwitchActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
+				final Dialog dialog = new Dialog(SwitchActivity.this);
+	            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	            dialog.setContentView(R.layout.custom_dialog_location);
+	            dialog.setCancelable(true);
+	            
+	            final Switch switchEnable = (Switch) dialog.findViewById(R.id.switchEnable);
+	            switchEnable.setChecked(SharedValues.getEnableLocation(getApplicationContext()));
+	            
+	            Button buttonSetCenter = (Button) dialog.findViewById(R.id.buttonSetCenter);
+	            buttonSetCenter.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						checkGPS(false);
+					}
+				});
+	            
+	            final EditText editTextRange = (EditText) dialog.findViewById(R.id.editTextRange);
+	            editTextRange.setText(String.valueOf(SharedValues.getOffRange(getApplicationContext())));
+	            
+	            Button buttonCheck = (Button) dialog.findViewById(R.id.buttonCheck);
+	            buttonCheck.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						double lat = SharedValues.getLat(getApplicationContext());
+						double lng = SharedValues.getLng(getApplicationContext());
+						if (lat != 0 && lng != 0) {
+							Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + lat + "," + lng));
+							intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+							startActivity(intent);
+						}
+						else {
+							Toast.makeText(getApplicationContext(), "ยังไม่ได้ตั้งค่า", Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+	            
+	            Button buttonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
+	            buttonCancel.setOnClickListener(new OnClickListener() {
+	                public void onClick(View v) {
+	                	
+	                    dialog.cancel();
+	                    
+	                }
+	            });
+	            
+	            Button buttonSet = (Button) dialog.findViewById(R.id.buttonSet);
+	            buttonSet.setOnClickListener(new OnClickListener() {
+	                public void onClick(View v) {
+	                	SharedValues.setEnableLocation(getApplicationContext(), switchEnable.isChecked());
+	                	SharedValues.setOffRange(getApplicationContext(), Double.parseDouble(editTextRange.getText().toString()));
+	                	Toast.makeText(getApplicationContext(), "Enable: " + SharedValues.getEnableLocation(getApplicationContext()) + " Range: " + SharedValues.getOffRange(getApplicationContext()), Toast.LENGTH_SHORT).show();
+	                	dialog.dismiss();
+	                }
+	            });
+
+	            dialog.show();
 			}
 		});
 		
@@ -126,7 +183,7 @@ public class SwitchActivity extends Activity {
 	            final double unit = I * 0.00383333;
 
 	            TextView textViewUnit = (TextView) dialog.findViewById(R.id.textViewUnit);
-	            textViewUnit.setText(String.valueOf(unit));
+	            textViewUnit.setText(String.format("%.15f", unit));
 	            final EditText editTextU = (EditText) dialog.findViewById(R.id.editTextU);
 	            final TextView textViewBaht = (TextView) dialog.findViewById(R.id.textViewBaht);
 	            
@@ -134,8 +191,13 @@ public class SwitchActivity extends Activity {
 					
 					@Override
 					public boolean onKey(View v, int keyCode, KeyEvent event) {
-						double baht = unit * Double.parseDouble(editTextU.getText().toString());
-						textViewBaht.setText(String.format("%.2f ฿", baht));
+						try {
+							double baht = unit * Double.parseDouble(editTextU.getText().toString());
+							textViewBaht.setText(String.format("%.2f ฿", baht));
+						}
+						catch (NumberFormatException e) {
+							
+						}
 						return false;
 					}
 				});
@@ -152,12 +214,9 @@ public class SwitchActivity extends Activity {
 			imageViewBulb.setImageResource(the8Digits.charAt(0) == '0' ? R.drawable.bulb_off : R.drawable.bulb_on);
 			
 			if (isShowDialog) {
-				if (the8Digits.charAt(0) != the8Digits.charAt(1))
+				if (the8Digits.charAt(0) != the8Digits.charAt(1)) {
 					SharedValues.showDialog(SwitchActivity.this, "Appliance has problem!");
-				else if (the8Digits.charAt(0) == '1')
-					SharedValues.showDialog(SwitchActivity.this, "Appliance is using");
-				else
-					SharedValues.showDialog(SwitchActivity.this, "Appliance is not use");
+				}
 			}
 	}
 	
@@ -201,15 +260,15 @@ public class SwitchActivity extends Activity {
             }
 			
 			if (result.length() == 2) {
-				refreshStatus(result, true);
+				refreshStatus(result, showDialog);
 			}
 			else {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
+					alert.setMessage("ติดต่อบอร์ดไม่ได้");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
+					alert.setMessage("ติดต่อบอร์ดไม่ได้");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
@@ -268,9 +327,9 @@ public class SwitchActivity extends Activity {
 				AlertDialog d;
 				AlertDialog.Builder alert = new AlertDialog.Builder(SwitchActivity.this);
 				if (result.equals("ConnectTimeoutException"))
-					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
+					alert.setMessage("ติดต่อบอร์ดไม่ได้");
 				else if (result.equals("SocketTimeoutException"))
-					alert.setMessage("เธ•เธดเธ”เธ•เน�เธญเธ�เธญเธฃเน�เธ”เน�เธกเน�เน�เธ”เน�");
+					alert.setMessage("ติดต่อบอร์ดไม่ได้");
 				else
 					alert.setMessage("Error: " + result);
 				alert.setCancelable(true);
@@ -321,46 +380,15 @@ public class SwitchActivity extends Activity {
 			
 			final Dialog dialog = new Dialog(SwitchActivity.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.custom_dialog_location);
+            dialog.setContentView(R.layout.custom_dialog_wifi);
             dialog.setCancelable(true);
             
-            final Switch switchEnable = (Switch) findViewById(R.id.switchEnable);
-            switchEnable.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-				
-				@Override
-				public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-					SharedValues.setEnableLocation(getApplicationContext(), arg1);
-				}
-			});
+            final Spinner spinnerSsid = (Spinner) dialog.findViewById(R.id.spinnerSsid);
             
-            Button buttonSetCenter = (Button) findViewById(R.id.buttonSetCenter);
-            buttonSetCenter.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					checkGPS(false);
-				}
-			});
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, ssids);
+            spinnerSsid.setAdapter(adapter);
             
-            final EditText editTextRange = (EditText) findViewById(R.id.editTextRange);
-            
-            Button buttonCheck = (Button) findViewById(R.id.buttonCheck);
-            buttonCheck.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					double lat = SharedValues.getLat(getApplicationContext());
-					double lng = SharedValues.getLng(getApplicationContext());
-					if (lat != 0 && lng != 0) {
-						Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + lat + "," + lng));
-						intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-						startActivity(intent);
-					}
-					else {
-						Toast.makeText(getApplicationContext(), "ยังไม่ได้ตั้งค่า", Toast.LENGTH_SHORT).show();
-					}
-				}
-			});
+            final EditText editTextPassword = (EditText) dialog.findViewById(R.id.editTextPassword);
             
             Button buttonCancel = (Button)dialog.findViewById(R.id.buttonCancel);
             buttonCancel.setOnClickListener(new OnClickListener() {
@@ -374,6 +402,9 @@ public class SwitchActivity extends Activity {
             Button buttonSet = (Button)dialog.findViewById(R.id.buttonSet);
             buttonSet.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
+                	
+                	SetWifiTask task = new SetWifiTask(getApplicationContext(), spinnerSsid.getSelectedItem().toString(), editTextPassword.getText().toString(), dialog);
+                	task.execute();
                 	
                 }
             });
@@ -438,7 +469,7 @@ public class SwitchActivity extends Activity {
 	@Override
 	protected void onResume() {
 		if (!onBoot) {
-			CheckStateTask task = new CheckStateTask(getApplicationContext(), false);
+			CheckStateTask task = new CheckStateTask(getApplicationContext(), true);
 	    	task.execute();
 		}
 		else {
@@ -449,6 +480,7 @@ public class SwitchActivity extends Activity {
 	}
 	
 	private void checkGPS(final boolean forceClose) {
+		Log.d("locc", "checkGPS");
 		if (!gpsTracker.canGetLocation()) {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
 			dialog.setTitle("ระบบหาตำแหน่งถูกปิด");
@@ -478,6 +510,7 @@ public class SwitchActivity extends Activity {
 	}
 	
 	private void checkMock(final boolean forceClose) {
+		Log.d("locc", "checkMock");
 		if (isMockSettingsON()) {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(SwitchActivity.this);
 			dialog.setTitle("ตรวจพบการเปิดระบบตำแหน่งจำลอง");
@@ -498,8 +531,12 @@ public class SwitchActivity extends Activity {
 			dialog.show();
 		}
 		else {
-			SharedValues.setLat(getApplicationContext(), gpsTracker.getLatitude());
-			SharedValues.setLng(getApplicationContext(), gpsTracker.getLongitude());
+			double lat = gpsTracker.getLatitude();
+			double lng = gpsTracker.getLongitude();
+			SharedValues.setLat(getApplicationContext(), lat);
+			SharedValues.setLng(getApplicationContext(), lng);
+			
+			Log.d("locc", SharedValues.getLat(getApplicationContext()) + " " + SharedValues.getLng(getApplicationContext()));
 		}
 	}
 	

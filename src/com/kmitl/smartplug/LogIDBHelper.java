@@ -30,7 +30,7 @@ public class LogIDBHelper extends SQLiteOpenHelper {
 	
 	public void addLogI(double I) {
 		SQLiteDatabase db = getWritableDatabase();
-		db.execSQL(String.format("INSERT INTO %s (i, date) VALUES (%f, %s)", TABLE_NAME, I, new Date().toString()));
+		db.execSQL(String.format("INSERT INTO %s (i, date) VALUES (%f, '%s')", TABLE_NAME, I, new Date().toString()));
 		db.close();
 	}
 	
